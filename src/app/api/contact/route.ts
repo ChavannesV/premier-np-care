@@ -5,7 +5,23 @@ import { siteUrl } from "@/lib/site";
 const contactSchema = z.object({
   name: z.string().trim().min(2, "Name is required.").max(120),
   email: z.string().trim().email("A valid email is required.").max(180),
-  phone: z.string().trim().max(40).optional(),
+  phone: z
+    .string()
+    .trim()
+    .max(40)
+    .refine(
+      (value) => {
+        const digitCount = value.replace(/\D/g, "").length;
+        return (
+          !value ||
+          (/^\+?[\d\s().-]+$/.test(value) &&
+            digitCount >= 7 &&
+            digitCount <= 15)
+        );
+      },
+      "Enter a valid phone number.",
+    )
+    .optional(),
   message: z.string().trim().min(10, "Message is required.").max(4000),
 });
 

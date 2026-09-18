@@ -10,10 +10,33 @@ type Status =
   | { type: "success"; message: string }
   | { type: "error"; message: string };
 
+type FieldName = "name" | "email" | "phone" | "message";
+type FieldErrors = Partial<Record<FieldName, string>>;
+
+const fieldNames: FieldName[] = ["name", "email", "phone", "message"];
+const inputClassName =
+  "min-h-12 rounded-[12px] border bg-porcelain px-4 py-3 text-base text-ink outline-none transition focus:ring-2";
+
+function getInputClassName(hasError: boolean) {
+  return `${inputClassName} ${
+    hasError
+      ? "border-warn ring-2 ring-warn/15 focus:border-warn focus:ring-warn/25"
+      : "border-line focus:border-cyan focus:ring-cyan/20"
+  }`;
+}
+
+function getFormField(form: HTMLFormElement, name: FieldName) {
+  return form.elements.namedItem(name) as
+    | HTMLInputElement
+    | HTMLTextAreaElement
+    | null;
+}
+
 export function ContactForm() {
   const [status, setStatus] = useState<Status>({ type: "idle", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessOverlay, setShowSuccessOverlay] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const isSent = status.type === "success";
 
   useEffect(() => {
@@ -30,21 +53,77 @@ export function ContactForm() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setIsSubmitting(true);
     setStatus({ type: "idle", message: "" });
 
     const form = event.currentTarget;
     const formData = new FormData(form);
+    const values = Object.fromEntries(formData) as Record<FieldName, string>;
+    const nextErrors: FieldErrors = {};
+    const phoneDigits = values.phone.replace(/\D/g, "");
+
+    if (values.name.trim().length < 2) {
+      nextErrors.name = "Please enter your name.";
+    }
+
+    if (!values.email.trim()) {
+      nextErrors.email = "Please enter your email address.";
+    } else if (!getFormField(form, "email")?.validity.valid) {
+      nextErrors.email = "Enter a valid email address, such as name@example.com.";
+    }
+
+    if (
+      values.phone.trim() &&
+      (!/^\+?[\d\s().-]+$/.test(values.phone) ||
+        phoneDigits.length < 7 ||
+        phoneDigits.length > 15)
+    ) {
+      nextErrors.phone = "Enter a valid phone number. A country code is optional.";
+    }
+
+    if (values.message.trim().length < 10) {
+      nextErrors.message = "Please enter a brief message (at least 10 characters).";
+    }
+
+    if (Object.keys(nextErrors).length > 0) {
+      setFieldErrors(nextErrors);
+      setStatus({
+        type: "error",
+        message: "Please correct the highlighted field and try again.",
+      });
+      const firstInvalidField = fieldNames.find((name) => nextErrors[name]);
+      if (firstInvalidField) {
+        getFormField(form, firstInvalidField)?.focus();
+      }
+      return;
+    }
+
+    setFieldErrors({});
+    setIsSubmitting(true);
 
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(Object.fromEntries(formData)),
+        body: JSON.stringify(values),
       });
-      const data = (await response.json()) as { message?: string };
+      const data = (await response.json()) as {
+        message?: string;
+        fieldErrors?: Partial<Record<FieldName, string[]>>;
+      };
 
       if (!response.ok) {
+        if (data.fieldErrors) {
+          const apiErrors = Object.fromEntries(
+            Object.entries(data.fieldErrors)
+              .filter(([, messages]) => messages?.[0])
+              .map(([name, messages]) => [name, messages?.[0]]),
+          ) as FieldErrors;
+          setFieldErrors(apiErrors);
+          const firstInvalidField = fieldNames.find((name) => apiErrors[name]);
+          if (firstInvalidField) {
+            getFormField(form, firstInvalidField)?.focus();
+          }
+        }
         throw new Error(data.message || "Please check the form and try again.");
       }
 
@@ -55,6 +134,7 @@ export function ContactForm() {
           "Thank you. Your message has been sent to the practice.",
       });
       setShowSuccessOverlay(true);
+      setFieldErrors({});
       form.reset();
     } catch (error) {
       setStatus({
@@ -69,61 +149,110 @@ export function ContactForm() {
     }
   }
 
+  function clearFieldError(field: FieldName) {
+    setFieldErrors((current) => {
+      if (!current[field]) {
+        return current;
+      }
+
+      const next = { ...current };
+      delete next[field];
+      return next;
+    });
+  }
+
   return (
     <>
-      <form className="grid gap-5" onSubmit={handleSubmit}>
+      <form className="grid gap-5" noValidate onSubmit={handleSubmit}>
         <div className="grid gap-2">
           <label className="font-semibold text-ink" htmlFor="name">
             Name
           </label>
           <input
+            aria-describedby={fieldErrors.name ? "name-error" : undefined}
+            aria-invalid={Boolean(fieldErrors.name)}
             autoComplete="name"
-            className="min-h-12 rounded-[12px] border border-line bg-porcelain px-4 py-3 text-base text-ink outline-none focus:border-cyan focus:ring-2 focus:ring-cyan/20"
+            className={getInputClassName(Boolean(fieldErrors.name))}
             disabled={isSent}
             id="name"
             name="name"
+            onChange={() => clearFieldError("name")}
             required
             type="text"
           />
+          {fieldErrors.name ? (
+            <p className="text-sm font-semibold text-warn" id="name-error">
+              {fieldErrors.name}
+            </p>
+          ) : null}
         </div>
         <div className="grid gap-2">
           <label className="font-semibold text-ink" htmlFor="email">
             Email
           </label>
           <input
+            aria-describedby={fieldErrors.email ? "email-error" : undefined}
+            aria-invalid={Boolean(fieldErrors.email)}
             autoComplete="email"
-            className="min-h-12 rounded-[12px] border border-line bg-porcelain px-4 py-3 text-base text-ink outline-none focus:border-cyan focus:ring-2 focus:ring-cyan/20"
+            className={getInputClassName(Boolean(fieldErrors.email))}
             disabled={isSent}
             id="email"
             name="email"
+            onChange={() => clearFieldError("email")}
             required
             type="email"
           />
+          {fieldErrors.email ? (
+            <p className="text-sm font-semibold text-warn" id="email-error">
+              {fieldErrors.email}
+            </p>
+          ) : null}
         </div>
         <div className="grid gap-2">
           <label className="font-semibold text-ink" htmlFor="phone">
             Phone
           </label>
           <input
+            aria-describedby={fieldErrors.phone ? "phone-error phone-hint" : "phone-hint"}
+            aria-invalid={Boolean(fieldErrors.phone)}
             autoComplete="tel"
-            className="min-h-12 rounded-[12px] border border-line bg-porcelain px-4 py-3 text-base text-ink outline-none focus:border-cyan focus:ring-2 focus:ring-cyan/20"
+            className={getInputClassName(Boolean(fieldErrors.phone))}
             disabled={isSent}
             id="phone"
+            inputMode="tel"
             name="phone"
+            onChange={() => clearFieldError("phone")}
+            placeholder="(908) 555-1234"
             type="tel"
           />
+          <p className="text-sm text-ink/60" id="phone-hint">
+            Optional. A country code is not required.
+          </p>
+          {fieldErrors.phone ? (
+            <p className="text-sm font-semibold text-warn" id="phone-error">
+              {fieldErrors.phone}
+            </p>
+          ) : null}
         </div>
         <div className="grid gap-2">
           <label className="font-semibold text-ink" htmlFor="message">
             Message
           </label>
           <textarea
-            className="min-h-36 rounded-[12px] border border-line bg-porcelain px-4 py-3 text-base text-ink outline-none focus:border-cyan focus:ring-2 focus:ring-cyan/20"
+            aria-describedby={fieldErrors.message ? "message-error" : undefined}
+            aria-invalid={Boolean(fieldErrors.message)}
+            className={`${getInputClassName(Boolean(fieldErrors.message))} min-h-36`}
             disabled={isSent}
             id="message"
             name="message"
+            onChange={() => clearFieldError("message")}
             required
           />
+          {fieldErrors.message ? (
+            <p className="text-sm font-semibold text-warn" id="message-error">
+              {fieldErrors.message}
+            </p>
+          ) : null}
         </div>
         <p className="rounded-[16px] border border-cyan/20 bg-mist px-4 py-3 text-sm leading-6 text-ink">
           For urgent symptoms, call 911 or use urgent care. For this form, a
