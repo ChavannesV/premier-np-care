@@ -1,0 +1,23 @@
+{
+  "seoTitle": "Provider",
+  "seoDescription": "Meet {providerName}, and learn how {practiceName} approaches provider-led telehealth visits.",
+  "heroLabel": "Meet your provider",
+  "heroTitle": "Care feels different when the clinician is",
+  "heroEmphasis": "visible from the start.",
+  "heroDescription": "{practiceName} is built around direct access to {providerName} — practical telehealth guidance, and a visit experience that explains what happens next.",
+  "bookCta": "Book an Appointment",
+  "servicesCta": "View Services",
+  "trustOne": "Board-certified",
+  "trustTwo": "Evidence-based care",
+  "trustThree": "Licensed in {serviceArea}",
+  "portraitBadge": "Board-Certified",
+  "storyLabel": "Her story",
+  "storyTitle": "A practice shaped around listening first.",
+  "standardsLabel": "Visit standards",
+  "standardsTitle": "What the visit should feel like for patients.",
+  "missionLabel": "Mission statement",
+  "missionTitle": "Compassion, respect, and clinical excellence.",
+  "fitLabel": "Patient fit",
+  "fitTitle": "Designed for patients who want a direct, unhurried relationship.",
+  "portraitCredential": "Nurse Practitioner · Telehealth · {serviceArea}"
+}

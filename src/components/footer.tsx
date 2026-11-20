@@ -7,9 +7,10 @@ import {
   insuranceAccepted,
   navItems,
   practiceDetails,
+  practiceSettings,
 } from "@/lib/content";
 
-const phoneHref = `tel:+1${phoneNumber.replace(/\D/g, "")}`;
+const phoneHref = `tel:${phoneNumber.startsWith("+") ? "+" : ""}${phoneNumber.replace(/\D/g, "")}`;
 
 export function Footer() {
   return (
@@ -23,13 +24,13 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-[1.4fr_0.7fr_1fr_1fr]">
           <div>
             <p className="font-display text-3xl font-medium text-paper">
-              Premier NP Care
+              {practiceSettings.name}
             </p>
             <p className="mt-3 max-w-sm leading-7 text-paper/68">
               Nurse Practitioner-led primary and preventive care for patients
-              age 14 and up.
+              age {practiceSettings.minimumAge} and up.
             </p>
-            <p className="mt-6 inline-flex items-center gap-2.5 text-sm font-semibold text-paper/82">
+            {practiceSettings.acceptingNewPatients ? <p className="mt-6 inline-flex items-center gap-2.5 text-sm font-semibold text-paper/82">
               <span
                 aria-hidden="true"
                 className="pulse-dot relative flex h-2.5 w-2.5"
@@ -37,8 +38,8 @@ export function Footer() {
                 <span className="absolute inline-flex h-full w-full rounded-full bg-aqua/70" />
                 <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-aqua" />
               </span>
-              Accepting new patients
-            </p>
+              {practiceSettings.statusLabel}
+            </p> : null}
             <div className="mt-4">
               <ButtonLink href={bookingUrl} variant="mist">
                 <CalendarCheck aria-hidden="true" size={19} />
@@ -115,8 +116,7 @@ export function Footer() {
               {insuranceAccepted.summary}
             </p>
             <p className="mt-3 text-sm leading-6 text-paper/52">
-              Including {insuranceAccepted.featured.join(" and ")}, plus other
-              major New Jersey plans and self pay.
+              {insuranceAccepted.note}
             </p>
             <Link
               className="mt-4 inline-block text-base font-semibold text-aqua transition-colors hover:text-paper focus-visible:rounded-[8px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
@@ -129,8 +129,7 @@ export function Footer() {
 
         <div className="mt-14 flex flex-col items-start justify-between gap-3 border-t border-white/12 pt-7 sm:flex-row sm:items-center">
           <p className="text-sm text-paper/48">
-            © {new Date().getFullYear()} Premier NP Care · Telehealth · New
-            Jersey
+            © {new Date().getFullYear()} {practiceSettings.name} · Telehealth · {practiceSettings.serviceArea}
           </p>
           <p className="text-sm text-paper/48">For emergencies, call 911</p>
         </div>

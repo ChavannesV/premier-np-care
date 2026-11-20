@@ -6,7 +6,7 @@ import { Container } from "@/components/container";
 import { MobileNav } from "@/components/mobile-nav";
 import { NavLink } from "@/components/nav-link";
 import { bookingUrl } from "@/lib/config";
-import { navItems } from "@/lib/content";
+import { navItems, practiceSettings } from "@/lib/content";
 
 export function Header() {
   return (
@@ -25,7 +25,7 @@ export function Header() {
             width={42}
           />
           <span className="font-display text-2xl font-semibold leading-none text-ink transition-colors group-hover:text-ink">
-            Premier NP Care
+            {practiceSettings.name}
           </span>
         </Link>
 
@@ -49,7 +49,7 @@ export function Header() {
           </ButtonLink>
         </div>
 
-        <MobileNav />
+        <MobileNav bookingUrl={bookingUrl} navItems={navItems} practiceName={practiceSettings.name} acceptingNewPatients={practiceSettings.acceptingNewPatients} statusLabel={practiceSettings.statusLabel} />
       </Container>
     </header>
   );

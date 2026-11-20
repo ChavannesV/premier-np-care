@@ -8,10 +8,16 @@ import { motion, useReducedMotion } from "framer-motion";
 import { CalendarCheck, Menu, X } from "lucide-react";
 import { ButtonLink } from "@/components/button";
 import { cn } from "@/components/utils";
-import { bookingUrl } from "@/lib/config";
-import { navItems } from "@/lib/content";
 
-export function MobileNav() {
+interface MobileNavProps {
+  bookingUrl: string;
+  navItems: { href: string; label: string }[];
+  practiceName: string;
+  acceptingNewPatients: boolean;
+  statusLabel: string;
+}
+
+export function MobileNav({ bookingUrl, navItems, practiceName, acceptingNewPatients, statusLabel }: MobileNavProps) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const shouldReduceMotion = useReducedMotion();
@@ -56,7 +62,7 @@ export function MobileNav() {
             <div className="relative flex min-h-full flex-col px-6 pb-8 pt-4">
               <div className="flex min-h-[52px] items-center justify-between">
                 <p className="font-display text-xl font-medium text-paper">
-                  Premier NP Care
+                  {practiceName}
                 </p>
                 <button
                   aria-label="Close navigation"
@@ -114,7 +120,7 @@ export function MobileNav() {
               </nav>
 
               <div className="mt-auto pt-10">
-                <p className="inline-flex items-center gap-2.5 text-sm font-semibold text-paper/80">
+                {acceptingNewPatients ? <p className="inline-flex items-center gap-2.5 text-sm font-semibold text-paper/80">
                   <span
                     aria-hidden="true"
                     className="pulse-dot relative flex h-2.5 w-2.5"
@@ -122,8 +128,8 @@ export function MobileNav() {
                     <span className="absolute inline-flex h-full w-full rounded-full bg-aqua/70" />
                     <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-aqua" />
                   </span>
-                  Accepting new patients
-                </p>
+                  {statusLabel}
+                </p> : null}
                 <ButtonLink
                   className="mt-4 w-full"
                   href={bookingUrl}

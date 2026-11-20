@@ -1,0 +1,108 @@
+{
+  "items": [
+    {
+      "title": "Preventive care",
+      "eyebrow": "Prevention",
+      "image": "/images/uploads/services/immi.jpeg",
+      "imageAlt": "A vaccine being prepared for immunization and preventive care.",
+      "imagePosition": "center 44%",
+      "homeImage": "/images/uploads/services/immi.jpeg",
+      "homeImageAlt": "A vaccine being prepared for immunization and preventive care.",
+      "homeImagePosition": "center 44%",
+      "description": "Routine checkups, screenings, immunizations, and lifestyle guidance that help patients stay ahead of health concerns.",
+      "items": [
+        "Routine checkups and annual physical exams",
+        "Health risk assessments",
+        "Immunizations and vaccinations",
+        "Screening for conditions such as high blood pressure, diabetes, high cholesterol, and certain cancers",
+        "Lifestyle counseling (nutrition, exercise, smoking cessation)"
+      ],
+      "fit": "Annual physicals, prevention planning, and wellness support for patients age {minimumAge} and up.",
+      "boundary": "Some preventive screenings, labs, or procedures may require coordination with an in-person facility.",
+      "tags": [
+        "Annual physicals",
+        "Immunizations",
+        "Screenings"
+      ],
+      "icon": "Stethoscope"
+    },
+    {
+      "title": "Diagnosis and treatment of common illnesses",
+      "eyebrow": "Sick visits",
+      "image": "/images/uploads/services/common-illness-exam.jpeg",
+      "imageAlt": "A clinician checking a patient's eyes during a routine health visit.",
+      "imagePosition": "center 36%",
+      "homeImage": "/images/uploads/services/common-illness-exam.jpeg",
+      "homeImageAlt": "A clinician checking a patient's eyes during a routine health visit.",
+      "homeImagePosition": "center 38%",
+      "description": "Timely evaluation and treatment guidance for everyday illnesses, minor injuries, and common acute concerns.",
+      "items": [
+        "Colds, flu, sore throat, and other infections",
+        "Fever and minor injuries",
+        "Skin conditions",
+        "Allergies",
+        "Gastrointestinal problems"
+      ],
+      "fit": "Acute symptoms that can be safely reviewed through the visit process.",
+      "boundary": "Severe symptoms, breathing trouble, chest pain, major injuries, or rapidly worsening concerns need urgent care.",
+      "tags": [
+        "Cold & flu",
+        "Infections",
+        "Minor injuries"
+      ],
+      "icon": "ShieldCheck"
+    },
+    {
+      "title": "Management of chronic diseases",
+      "eyebrow": "Ongoing care",
+      "image": "/images/uploads/services/chronic-care-blood-pressure.jpeg",
+      "imageAlt": "A blood pressure check during chronic disease management follow-up.",
+      "imagePosition": "center 42%",
+      "homeImage": "/images/uploads/services/chronic-care-blood-pressure.jpeg",
+      "homeImageAlt": "A blood pressure check during chronic disease management follow-up.",
+      "homeImagePosition": "center 42%",
+      "description": "Ongoing support for long-term conditions, with education, monitoring, and clear next steps.",
+      "items": [
+        "Diabetes",
+        "Hypertension (high blood pressure)",
+        "Asthma and chronic obstructive pulmonary disease (COPD)",
+        "Heart disease",
+        "Arthritis",
+        "Thyroid disorders"
+      ],
+      "fit": "Stable chronic condition follow-up, medication questions, and care planning.",
+      "boundary": "Unstable readings, severe symptoms, or complex medication changes may require higher-touch or in-person care.",
+      "tags": [
+        "Diabetes",
+        "Hypertension",
+        "Asthma"
+      ],
+      "icon": "HeartPulse"
+    },
+    {
+      "title": "Mental health services",
+      "eyebrow": "Support",
+      "image": "/images/uploads/services/mental-health-conversation.jpeg",
+      "imageAlt": "A clinician speaking with a patient in a calm care conversation.",
+      "imagePosition": "center 38%",
+      "homeImage": "/images/uploads/services/mental-health-conversation.jpeg",
+      "homeImageAlt": "A clinician speaking with a patient in a calm care conversation.",
+      "homeImagePosition": "center 40%",
+      "description": "Screening, basic counseling, medication management for common conditions, and specialist referral when needed.",
+      "items": [
+        "Screening for depression, anxiety, and substance use",
+        "Basic counseling and support",
+        "Medication management for common mental health conditions",
+        "Referral to mental health specialists when needed"
+      ],
+      "fit": "Patients who need screening, early support, or coordinated mental health next steps.",
+      "boundary": "Crisis symptoms, suicidal thoughts, or urgent behavioral health needs require emergency or crisis services right away.",
+      "tags": [
+        "Anxiety & depression",
+        "Medication management",
+        "Specialist referrals"
+      ],
+      "icon": "Brain"
+    }
+  ]
+}

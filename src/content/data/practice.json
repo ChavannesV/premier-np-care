@@ -1,0 +1,34 @@
+{
+  "name": "Premier NP Care",
+  "address": {
+    "street": "412 East Washington Avenue",
+    "city": "Washington",
+    "region": "New Jersey",
+    "postalCode": "07882",
+    "country": "US"
+  },
+  "serviceArea": "New Jersey",
+  "minimumAge": 14,
+  "hours": [
+    {
+      "weekdays": [
+        "Mo",
+        "Tu",
+        "We",
+        "Th"
+      ],
+      "open": "08:00",
+      "close": "17:00"
+    },
+    {
+      "weekdays": [
+        "Fr"
+      ],
+      "open": "09:00",
+      "close": "17:00"
+    }
+  ],
+  "bookingUrl": "https://d2oe0ra32qx05a.cloudfront.net/?practiceKey=k_1_115955",
+  "acceptingNewPatients": true,
+  "statusLabel": "Accepting new patients"
+}

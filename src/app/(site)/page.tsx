@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageContent, pageMetadata } from "@/content/page-content";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, CalendarCheck, CheckCircle2, FileText } from "lucide-react";
@@ -8,24 +9,11 @@ import { HomeHero } from "@/components/home/home-hero";
 import { DrawRule, MotionReveal } from "@/components/motion-reveal";
 import { Section } from "@/components/section";
 import { bookingUrl } from "@/lib/config";
-import { practiceAtAGlance, services } from "@/lib/content";
+import { practiceAtAGlance, practiceSettings, services } from "@/lib/content";
 
-export const metadata: Metadata = {
-  title: {
-    absolute: "Premier NP Care | Virginie Chavannes, APN",
-  },
-  description:
-    "Book provider-led telehealth visits with Virginie Chavannes, APN. Premier NP Care offers preventive care, common illness visits, chronic disease support, and mental health services for patients age 14 and up in New Jersey.",
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    title: "Premier NP Care | Virginie Chavannes, APN",
-    description:
-      "Provider-led telehealth visits for preventive care, common illnesses, chronic disease support, and mental health services in New Jersey.",
-    url: "/",
-  },
-};
+const copy = pageContent.home;
+
+export const metadata: Metadata = pageMetadata("home");
 
 export default function Home() {
   return (
@@ -44,13 +32,12 @@ export default function Home() {
         />
         <Container className="relative grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
           <MotionReveal>
-            <p className="label-caps text-aqua">Practice clarity</p>
+            <p className="label-caps text-aqua">{copy.clarityLabel}</p>
             <h2 className="mt-5 max-w-xl font-display text-4xl font-medium leading-tight md:text-5xl">
-              Know the care path before the visit begins.
+              {copy.clarityTitle}
             </h2>
             <p className="mt-5 max-w-lg text-lg leading-8 text-paper/72">
-              Premier NP Care helps patients understand who they will see, what
-              to expect, and how the visit can fit into everyday life.
+              {copy.clarityDescription}
             </p>
           </MotionReveal>
 
@@ -86,20 +73,18 @@ export default function Home() {
         <Container className="relative">
           <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
             <MotionReveal>
-              <p className="label-caps text-cobalt">Services provided</p>
+              <p className="label-caps text-cobalt">{copy.servicesLabel}</p>
               <h2 className="mt-5 max-w-xl font-display text-4xl font-medium leading-[1.06] text-ink md:text-5xl">
-                Care areas patients can scan with confidence.
+                {copy.servicesTitle}
               </h2>
             </MotionReveal>
             <MotionReveal delay={0.08}>
               <div className="grid gap-5 border-y border-gold/35 py-6 md:grid-cols-[1fr_auto] md:items-center">
                 <p className="max-w-2xl text-lg leading-8 text-ink/70">
-                  Prevention, common illnesses, chronic disease support, and
-                  mental health services — organized the way patients ask about
-                  care.
+                  {copy.servicesDescription}
                 </p>
                 <ButtonLink href="/services" variant="secondary">
-                  View Services
+                  {copy.servicesCta}
                   <ArrowRight aria-hidden="true" size={19} />
                 </ButtonLink>
               </div>
@@ -160,7 +145,7 @@ export default function Home() {
                       </div>
 
                       <p className="mt-auto inline-flex items-center gap-2 pt-2 text-sm font-semibold text-harbor transition-transform duration-300 group-hover:translate-x-1">
-                        Explore
+                        {copy.exploreCta}
                         <ArrowRight aria-hidden="true" size={15} />
                       </p>
                     </div>
@@ -181,25 +166,21 @@ export default function Home() {
         <Container className="relative">
           <div className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
             <MotionReveal>
-              <p className="label-caps text-cobalt">Patient journey</p>
+              <p className="label-caps text-cobalt">{copy.journeyLabel}</p>
               <h2 className="mt-5 max-w-xl font-display text-4xl font-medium leading-[1.06] text-ink md:text-5xl">
-                Book once. Know what comes next.
+                {copy.journeyTitle}
               </h2>
             </MotionReveal>
             <MotionReveal delay={0.08}>
               <ButtonLink href="/how-it-works" variant="secondary">
-                See How It Works
+                {copy.journeyCta}
                 <ArrowRight aria-hidden="true" size={19} />
               </ButtonLink>
             </MotionReveal>
           </div>
 
           <div className="mt-12 grid gap-10 sm:grid-cols-3 sm:gap-8">
-            {[
-              ["Book", "Choose a time through the secure scheduling platform."],
-              ["Meet", "Talk with Virginie directly — no waiting room, no rush."],
-              ["Know your plan", "Leave with next steps written in plain language."],
-            ].map(([title, body], index, steps) => {
+            {copy.journeySteps.map(({ title, body }, index, steps) => {
               const isLast = index === steps.length - 1;
               const gradient =
                 index === 0
@@ -210,7 +191,7 @@ export default function Home() {
                   ? "linear-gradient(180deg,#1a3557,#12aec4)"
                   : "linear-gradient(180deg,#12aec4,#c9a84c)";
               return (
-                <MotionReveal delay={0.15 + index * 0.18} key={title}>
+                <MotionReveal delay={0.15 + index * 0.18} key={`${index}-${title}`}>
                   <div className="relative grid grid-cols-[40px_1fr] gap-x-4 sm:block">
                     {isLast ? null : (
                       <>
@@ -249,23 +230,17 @@ export default function Home() {
               <div>
                 <div className="flex items-center gap-3 text-cobalt">
                   <FileText aria-hidden="true" size={22} />
-                  <p className="label-caps">What to have ready</p>
+                  <p className="label-caps">{copy.prepLabel}</p>
                 </div>
                 <p className="mt-3 max-w-md leading-7 text-ink/68">
-                  Join the video visit 5-10 minutes early and keep a few basics
-                  nearby so the appointment starts smoothly.
+                  {copy.prepDescription}
                 </p>
               </div>
               <div className="grid gap-3 sm:grid-cols-2">
-                {[
-                  "Photo ID",
-                  "Insurance card",
-                  "Current medication list",
-                  "Recent health information",
-                ].map((item) => (
+                {copy.prepItems.map((item, index) => (
                   <div
                     className="flex items-center gap-3 rounded-[14px] border border-line bg-porcelain px-4 py-3"
-                    key={item}
+                    key={`${index}-${item}`}
                   >
                     <CheckCircle2
                       aria-hidden="true"
@@ -293,11 +268,11 @@ export default function Home() {
         />
         <Container className="relative flex flex-col items-center text-center">
           <MotionReveal>
-            <p className="label-caps text-cobalt">Premier NP Care</p>
+            <p className="label-caps text-cobalt">{practiceSettings.name}</p>
             <h2 className="mx-auto mt-6 max-w-3xl font-display text-5xl font-medium leading-[1.06] text-ink md:text-6xl">
-              Begin with a conversation,{" "}
+              {copy.closingTitle}{" "}
               <em className="font-normal italic text-cobalt">
-                not a waiting room.
+                {copy.closingEmphasis}
               </em>
             </h2>
             <div className="mt-10 flex flex-col items-center gap-5">
@@ -307,10 +282,10 @@ export default function Home() {
                 variant="cobalt"
               >
                 <CalendarCheck aria-hidden="true" size={20} />
-                Book an Appointment
+                {copy.bookCta}
               </ButtonLink>
               <p className="text-sm text-ink/56">
-                For urgent symptoms, use emergency services.
+                {copy.urgentNote}
               </p>
             </div>
           </MotionReveal>

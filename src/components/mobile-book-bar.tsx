@@ -5,9 +5,8 @@ import { usePathname } from "next/navigation";
 import { CalendarCheck } from "lucide-react";
 import { ButtonLink } from "@/components/button";
 import { cn } from "@/components/utils";
-import { bookingUrl } from "@/lib/config";
 
-export function MobileBookBar() {
+export function MobileBookBar({ bookingUrl }: { bookingUrl: string }) {
   const [visible, setVisible] = useState(false);
   const pathname = usePathname();
 

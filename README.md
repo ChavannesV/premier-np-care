@@ -1,45 +1,136 @@
 # Premier NP Care
 
-A five-page marketing website for Premier NP Care, a Nurse Practitioner-led telehealth-affiliated practice. The site is informational only: no patient portal, no auth, no database, no scheduling logic, and no EHR integration.
+A five-page marketing website for Premier NP Care, a Nurse Practitioner-led telehealth-affiliated practice. The public site is informational only: no patient portal, database, scheduling logic, or EHR integration. A private Keystatic editor uses GitHub sign-in to save public website content as JSON in this repository.
 
-## Run Locally
+## Run locally
+
+Use Node.js 20.9 or newer, then:
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
-Open `http://localhost:3000`.
+Open `http://localhost:3000` for the website and `http://localhost:3000/admin`
+for the editor. No account or environment variables are needed for local
+browsing/editing. Nunito Sans and Cormorant Garamond are bundled through
+Fontsource, so development and builds do not fetch fonts from Google. If the port is occupied, run `npm run dev -- --port 3100`.
+The development server defaults to **local** storage: Save writes JSON and
+uploaded images to this checkout, and Next.js refreshes the page. It does not
+publish anything. Commit those changes when ready.
 
-## Update Client-Review Copy
+`.env.example` documents optional email settings and production editor setup.
+No patient information belongs in the editor: it manages public website content.
 
-The site uses polished first-revision copy so the design can be reviewed without visible placeholder flags. Before launch, review provider credentials, biography, service scope, contact details, booking URL, and service-area language across `src/`.
+## Editing the website
 
-## Replace Images
+In production, bookmark `https://www.premiernpcare.com/admin` and sign in
+with a GitHub account that has write access to the repository.
 
-The provider headshot is stored locally and rendered with `next/image`:
+| Editor section | What can be changed |
+| --- | --- |
+| Practice information | Practice name, phone, address, service area, hours, minimum patient age, booking URL, accepting-new-patients status |
+| Insurance | Summary, coverage note, plans and which plans are featured |
+| Provider | Name, credentials, role, photograph, biography and mission |
+| Services | Service titles, descriptions, lists, images and ordering |
+| Shared content | Practice highlights, visit steps, patient fit and provider standards |
+| Pages | Homepage, Provider, Services, How It Works and Contact copy, including search titles/descriptions |
 
-```text
-public/images/virginie-chavannes.jpeg
-```
+Fields explain their purpose. Required text, URLs and list sizes are validated.
+Photos are saved in the repository. Layout, styling, page routes and application
+behavior stay in code.
 
-Service imagery is configured in `src/lib/content.ts` and stored in `public/images/client/`.
+**Production publishing:** edit → Save on the production branch (`main`) →
+GitHub commit → Vercel rebuild → updated website after a successful deployment.
+Saving is not instant publication; wait for the deployment to finish. A save on
+another branch produces a preview when configured, and requires merging before
+it reaches production. A failed build leaves the last successful deployment live.
+GitHub commit history provides an audit trail; reverting a content commit and
+letting Vercel rebuild restores the prior content.
 
-## Booking Link Or Embed
+**Local publishing:** Save only updates your checkout. Verify locally, commit,
+and push to the configured production branch to trigger publication.
 
-Set the real scheduling URL in Vercel or `.env.local`:
+Public pages read validated JSON at build time. They do not call GitHub or
+Keystatic while a visitor browses. Shared practice facts also populate search
+engine structured data. An invalid hand-edited file fails the build with the
+file name and field errors.
+
+### Content files
+
+- `src/content/data/`: editor-managed content.
+- `keystatic.config.ts`: GitHub/local storage and editor sections.
+- `src/content/page-editor.ts`: page editor fields.
+- `src/lib/content.ts`: shared content exports consumed by the website.
+- `src/lib/config.ts`: booking and phone values from editable practice settings.
+- `public/images/`: site photos and uploaded images.
+
+`NEXT_PUBLIC_BOOKING_URL` and `NEXT_PUBLIC_PHONE_NUMBER` no longer override the
+editor. Update those fields under Practice information instead. Email delivery
+credentials and the contact form destination remain environment variables.
+
+### Connect GitHub publishing (one-time setup)
+
+1. Connect this repository to the Vercel project and confirm its production
+   branch is `main`. The default repository is
+   `supertrens/premier-np-care`; set `NEXT_PUBLIC_KEYSTATIC_REPO=owner/name` if
+   it changes. Do not copy the AllAges GitHub App credentials.
+2. Set `NEXT_PUBLIC_KEYSTATIC_STORAGE=github` locally and restart `npm run dev`.
+   With no Keystatic credentials configured yet, open `/admin` and use the
+   setup flow to create a GitHub App. Set its deployed URL to
+   `https://www.premiernpcare.com` and install it only on this repository.
+3. Copy the generated `KEYSTATIC_GITHUB_CLIENT_ID`,
+   `KEYSTATIC_GITHUB_CLIENT_SECRET`, `KEYSTATIC_SECRET` and
+   `NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG` to the Vercel project's environment
+   variables. Keep secrets in environment settings, never in content or Git.
+4. Confirm the GitHub App callback includes
+   `https://www.premiernpcare.com/api/keystatic/github/oauth/callback`.
+   Add other editor hostnames explicitly if used. Give the owner's GitHub
+   account write access to this repository.
+5. In production leave `NEXT_PUBLIC_KEYSTATIC_STORAGE` unset (GitHub is the
+   production default), or set it to `github`. **Never set it to `local`.**
+   Redeploy after adding the credentials or changing any `NEXT_PUBLIC_*` setting.
+6. Test one harmless editor change on the production branch: confirm the
+   GitHub commit, a successful Vercel production deployment, and the live
+   change. Undo the test through the editor. Check commit-author permissions
+   in Vercel if GitHub commits do not trigger deployments.
+
+For direct Save-to-publish, the owner must be allowed to commit to the
+production branch. If the repository requires pull requests, use
+branch → review/merge → publish instead; saving a branch alone will not update
+production. Do not silently bypass existing repository protections.
+
+Production editing refuses local disk writes. Without GitHub App credentials,
+the public site still builds and runs, but the editor API reports that setup is
+required. `/admin`, `/keystatic` and `/api/keystatic` are excluded from indexing;
+GitHub permissions control production editing access.
+
+Setup reference: [Keystatic GitHub mode](https://keystatic.com/docs/github-mode).
+
+## Verification
 
 ```bash
-NEXT_PUBLIC_BOOKING_URL="https://your-booking-link.example"
+npm run lint
+npm run typecheck
+npm run build
+# With npm run dev running in another terminal:
+npm run smoke
+SMOKE_EDITOR_WRITES=1 npm run smoke  # temporary edit → render → restore
 ```
 
-Current review link:
+The smoke test checks public pages, mobile navigation and the local editor.
+With `SMOKE_EDITOR_WRITES=1`, it also makes temporary content edits and restores
+them; that option is limited to a local checkout. It uses installed Google Chrome by default. See the script for
+browser/URL options. Production GitHub login, commits and Vercel republishing
+must be verified once the GitHub App is connected.
 
-```bash
-NEXT_PUBLIC_BOOKING_URL="https://d2oe0ra32qx05a.cloudfront.net/?practiceKey=k_1_115955"
-```
+### Dependency maintenance
 
-The booking component is `src/components/booking-embed-slot.tsx`. It renders a native booking panel and opens the live Tebra appointment calendar in a modal, with a backup new-tab link.
+This change retains the existing Next.js 16.2.9 version. `npm audit` currently
+reports advisories in the dependency tree, including Next.js; a framework and
+dependency security update should be handled before the next production launch.
+The local editor and production build checks above pass, but they are not a
+security audit.
 
 ## Contact Form And Resend
 
@@ -80,9 +171,7 @@ npm run build
 
 The production domain is:
 
-```bash
-NEXT_PUBLIC_SITE_URL="https://www.premiernpcare.com"
-```
+`https://www.premiernpcare.com` (configured in `src/lib/site.ts`).
 
 The site generates:
 
@@ -103,7 +192,8 @@ Google indexing is not instant; allow several days to a few weeks for consistent
 
 - Confirm the exact credential line and licensing language for Virginie Chavannes, APN.
 - Review approved service imagery in `public/images/client/`.
-- Set `NEXT_PUBLIC_SITE_URL` and `NEXT_PUBLIC_BOOKING_URL`.
+- Confirm the domain in `src/lib/site.ts` and the booking URL in the editor.
+- Complete the GitHub App setup and verify Save → commit → production deployment.
 - Add Resend environment variables.
 - Review service scope and safety language with the provider.
 - Confirm `https://www.premiernpcare.com/robots.txt` and `https://www.premiernpcare.com/sitemap.xml` return `200`.

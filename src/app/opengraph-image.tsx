@@ -2,7 +2,9 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { ImageResponse } from "next/og";
 
-export const alt = "Premier NP Care";
+import { practiceSettings, providerDetails } from "@/lib/content";
+
+export const alt = practiceSettings.name;
 export const size = {
   width: 1200,
   height: 630,
@@ -43,7 +45,7 @@ export default async function Image() {
             width: "100%",
           }}
         >
-          <img alt="Premier NP Care" height={186} src={logoSrc} width={372} />
+          <img alt={practiceSettings.name} height={186} src={logoSrc} width={372} />
           <div
             style={{
               background: "linear-gradient(90deg,#12AEC4,#58C7D6,#C9A84C)",
@@ -53,7 +55,7 @@ export default async function Image() {
             }}
           />
           <div style={{ color: "rgba(26,53,87,0.72)", fontSize: 32 }}>
-            Personal care with Virginie Chavannes, APN.
+            {`Personal care with ${providerDetails.displayName}.`}
           </div>
         </div>
       </div>

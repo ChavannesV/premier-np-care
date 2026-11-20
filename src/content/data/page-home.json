@@ -1,0 +1,50 @@
+{
+  "seoTitle": "{practiceName} | {providerName}",
+  "seoDescription": "Book provider-led telehealth visits with {providerName}. {practiceName} offers preventive care, common illness visits, chronic disease support, and mental health services for patients age {minimumAge} and up in {serviceArea}.",
+  "clarityLabel": "Practice clarity",
+  "clarityTitle": "Know the care path before the visit begins.",
+  "clarityDescription": "{practiceName} helps patients understand who they will see, what to expect, and how the visit can fit into everyday life.",
+  "servicesLabel": "Services provided",
+  "servicesTitle": "Care areas patients can scan with confidence.",
+  "servicesDescription": "Prevention, common illnesses, chronic disease support, and mental health services — organized the way patients ask about care.",
+  "servicesCta": "View Services",
+  "exploreCta": "Explore",
+  "journeyLabel": "Patient journey",
+  "journeyTitle": "Book once. Know what comes next.",
+  "journeyCta": "See How It Works",
+  "prepLabel": "What to have ready",
+  "prepDescription": "Join the video visit 5-10 minutes early and keep a few basics nearby so the appointment starts smoothly.",
+  "closingTitle": "Begin with a conversation,",
+  "closingEmphasis": "not a waiting room.",
+  "bookCta": "Book an Appointment",
+  "urgentNote": "For urgent symptoms, use emergency services.",
+  "journeySteps": [
+    {
+      "title": "Book",
+      "body": "Choose a time through the secure scheduling platform."
+    },
+    {
+      "title": "Meet",
+      "body": "Talk with {providerFirstName} directly — no waiting room, no rush."
+    },
+    {
+      "title": "Know your plan",
+      "body": "Leave with next steps written in plain language."
+    }
+  ],
+  "prepItems": [
+    "Photo ID",
+    "Insurance card",
+    "Current medication list",
+    "Recent health information"
+  ],
+  "heroEyebrow": "Nurse Practitioner-led telehealth · {serviceArea}",
+  "heroTitle": "Care you can understand, from a clinician",
+  "heroEmphasis": "you know.",
+  "heroDescription": "Personal telehealth with {providerName} — calm, direct, and clearly explained before you book.",
+  "providerCta": "Meet the Provider",
+  "trustOne": "Provider-led visits",
+  "trustTwo": "Honest telehealth boundaries",
+  "trustThree": "Secure platform",
+  "portraitCredential": "Nurse Practitioner · Telehealth · {serviceArea}"
+}

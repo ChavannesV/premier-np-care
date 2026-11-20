@@ -1,0 +1,21 @@
+{
+  "seoTitle": "Services",
+  "seoDescription": "Explore preventive care, common illness visits, chronic disease management, and mental health services at {practiceName}.",
+  "ageLabel": "Patients {minimumAge} and up",
+  "asideDescription": "Every category below states its own scope, so you always know when a concern fits telehealth and when in-person care is safer.",
+  "heroTitle": "Care options that feel",
+  "heroEmphasis": "simple to understand.",
+  "heroDescription": "{practiceName} provides patient-centered primary and preventive care for everyday health needs, common illnesses, and ongoing conditions.",
+  "servicesLabel": "Services provided",
+  "servicesTitle": "Clear care areas, with the details patients ask for.",
+  "servicesDescription": "Each category lists what is included so patients can find the right starting point without guessing.",
+  "categoryLabel": "Service category",
+  "fitLabel": "Helpful for",
+  "boundaryLabel": "Consider in-person",
+  "includesLabel": "Includes",
+  "safetyLabel": "Know the limits",
+  "closingTitle": "Not sure where your concern fits?",
+  "closingDescription": "Book a visit or send a general question. If symptoms feel urgent, choose urgent or emergency care right away.",
+  "contactCta": "Contact the Practice",
+  "heroLabel": "Services"
+}

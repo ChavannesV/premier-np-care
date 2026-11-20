@@ -1,0 +1,30 @@
+{
+  "summary": "Accepting all major insurance plans in {serviceArea}, plus self pay.",
+  "note": "Coverage may vary by plan. Contact the practice if you have questions about your benefits.",
+  "plans": [
+    {
+      "name": "Braven Health",
+      "featured": true
+    },
+    {
+      "name": "Horizon BCBS",
+      "featured": true
+    },
+    {
+      "name": "UnitedHealthcare",
+      "featured": false
+    },
+    {
+      "name": "Aetna",
+      "featured": false
+    },
+    {
+      "name": "AmeriHealth",
+      "featured": false
+    },
+    {
+      "name": "Self pay",
+      "featured": false
+    }
+  ]
+}

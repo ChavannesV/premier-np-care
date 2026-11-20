@@ -1,0 +1,49 @@
+{
+  "seoTitle": "How It Works",
+  "seoDescription": "Understand the {practiceName} patient journey from booking to telehealth visit, care plan, and follow-up.",
+  "reassuranceRows": [
+    {
+      "label": "Before the visit",
+      "body": "You receive simple visit instructions so you know what to expect and how to prepare."
+    },
+    {
+      "label": "During the visit",
+      "body": "{providerFirstName} listens, asks focused questions, and talks through the care options that fit your concern."
+    },
+    {
+      "label": "After the visit",
+      "body": "You leave with plain-language next steps and follow-up guidance."
+    }
+  ],
+  "prepItems": [
+    "Photo ID",
+    "Insurance card",
+    "Current medication list",
+    "Any recent health information"
+  ],
+  "asideLabel": "Simple from the start",
+  "asideDescription": "The care path is easy to follow: book, prepare, meet with the provider, and leave with next steps.",
+  "heroDescription": "Telehealth should feel clear before the visit starts. {practiceName} makes the care journey easy to understand from the first click.",
+  "journeyLabel": "Care path",
+  "journeyTitle": "Book once. Know what comes next.",
+  "journeyDescription": "The path is intentionally simple: choose a time, prepare for the visit, meet with the provider, and leave with a plan.",
+  "prepLabel": "What to have ready",
+  "prepTitle": "A little prep helps the visit feel easier.",
+  "prepDescription": "This telemedicine visit is scheduled to discuss current health concerns, review symptoms, assess medications, and address questions or follow-up care needs. Please join the video appointment 5-10 minutes early using the provided link.",
+  "feeNote": "Service fees vary depending on the length and complexity of the visit.",
+  "reassuranceLabel": "New to telehealth",
+  "reassuranceTitle": "The process should feel calm before the visit begins.",
+  "urgentLabel": "Important",
+  "urgentNote": "If symptoms feel urgent, choose urgent or emergency care right away.",
+  "closingLabel": "Start here",
+  "closingTitle": "One simple first step.",
+  "closingDescription": "Book through the practice scheduling link, and the next steps are explained from there.",
+  "bookCta": "Book an Appointment",
+  "heroLabel": "How it works",
+  "heroTitle": "From booking to next steps, the path stays clear.",
+  "journeySummary": [
+    "Choose a visit time",
+    "Meet {providerName}",
+    "Leave with a care plan"
+  ]
+}

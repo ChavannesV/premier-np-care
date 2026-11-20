@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageContent, pageMetadata } from "@/content/page-content";
 import {
   CalendarCheck,
   CheckCircle2,
@@ -14,36 +15,9 @@ import { Section } from "@/components/section";
 import { bookingUrl } from "@/lib/config";
 import { patientJourney } from "@/lib/content";
 
-export const metadata: Metadata = {
-  title: "How It Works",
-  description:
-    "Understand the Premier NP Care patient journey from booking to telehealth visit, care plan, and follow-up.",
-  alternates: {
-    canonical: "/how-it-works",
-  },
-};
+const copy = pageContent.howItWorks;
 
-const reassuranceRows = [
-  {
-    label: "Before the visit",
-    body: "You receive simple visit instructions so you know what to expect and how to prepare.",
-  },
-  {
-    label: "During the visit",
-    body: "Virginie listens, asks focused questions, and talks through the care options that fit your concern.",
-  },
-  {
-    label: "After the visit",
-    body: "You leave with plain-language next steps and follow-up guidance.",
-  },
-];
-
-const appointmentPrepItems = [
-  "Photo ID",
-  "Insurance card",
-  "Current medication list",
-  "Any recent health information",
-];
+export const metadata: Metadata = pageMetadata("howItWorks");
 
 export default function HowItWorksPage() {
   return (
@@ -51,19 +25,17 @@ export default function HowItWorksPage() {
       <PageIntro
         aside={
           <div className="rounded-[22px] border border-line bg-paper/82 p-5 shadow-[0_16px_50px_rgba(7,28,42,0.06)]">
-            <p className="label-caps text-cobalt">Simple from the start</p>
+            <p className="label-caps text-cobalt">{copy.asideLabel}</p>
             <p className="mt-3 leading-7 text-ink/74">
-              The care path is easy to follow: book, prepare, meet with the
-              provider, and leave with next steps.
+              {copy.asideDescription}
             </p>
           </div>
         }
-        eyebrow="How it works"
-        title="From booking to next steps, the path stays clear."
+        eyebrow={copy.heroLabel}
+        title={copy.heroTitle}
       >
         <p>
-          Telehealth should feel clear before the visit starts. Premier NP Care
-          makes the care journey easy to understand from the first click.
+          {copy.heroDescription}
         </p>
       </PageIntro>
 
@@ -76,23 +48,17 @@ export default function HowItWorksPage() {
                   <div className="care-current-lines absolute inset-0 opacity-18" />
                   <div className="relative flex h-full min-h-[360px] flex-col justify-between">
                     <div>
-                      <p className="label-caps text-aqua">Care path</p>
+                      <p className="label-caps text-aqua">{copy.journeyLabel}</p>
                       <h2 className="mt-5 max-w-sm font-display text-4xl font-medium leading-tight md:text-5xl">
-                        Book once. Know what comes next.
+                        {copy.journeyTitle}
                       </h2>
                       <p className="mt-5 max-w-md leading-7 text-paper/72">
-                        The path is intentionally simple: choose a time,
-                        prepare for the visit, meet with the provider, and
-                        leave with a plan.
+                        {copy.journeyDescription}
                       </p>
                     </div>
                     <div className="mt-8 grid gap-3 border-y border-white/14 py-5">
-                      {[
-                        "Choose a visit time",
-                        "Meet Virginie Chavannes, APN",
-                        "Leave with a care plan",
-                      ].map((item) => (
-                        <div className="flex items-center gap-3" key={item}>
+                      {copy.journeySummary.map((item, index) => (
+                        <div className="flex items-center gap-3" key={`${index}-${item}`}>
                           <span className="h-2 w-2 rounded-full bg-aqua" />
                           <p className="text-sm font-semibold text-paper/76">
                             {item}
@@ -143,24 +109,21 @@ export default function HowItWorksPage() {
               <div>
                 <div className="flex items-center gap-3 text-cobalt">
                   <FileText aria-hidden="true" size={24} />
-                  <p className="label-caps">What to have ready</p>
+                  <p className="label-caps">{copy.prepLabel}</p>
                 </div>
                 <h2 className="mt-5 max-w-md font-display text-4xl font-medium leading-[1.06] text-ink md:text-5xl">
-                  A little prep helps the visit feel easier.
+                  {copy.prepTitle}
                 </h2>
               </div>
               <div>
                 <p className="text-lg leading-8 text-ink/74">
-                  This telemedicine visit is scheduled to discuss current
-                  health concerns, review symptoms, assess medications, and
-                  address questions or follow-up care needs. Please join the
-                  video appointment 5-10 minutes early using the provided link.
+                  {copy.prepDescription}
                 </p>
                 <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                  {appointmentPrepItems.map((item) => (
+                  {copy.prepItems.map((item, index) => (
                     <div
                       className="flex items-center gap-3 rounded-[14px] border border-line bg-porcelain px-4 py-3"
-                      key={item}
+                      key={`${index}-${item}`}
                     >
                       <CheckCircle2
                         aria-hidden="true"
@@ -172,8 +135,7 @@ export default function HowItWorksPage() {
                   ))}
                 </div>
                 <p className="mt-6 border-t border-line pt-5 text-sm leading-6 text-ink/62">
-                  Service fees vary depending on the length and complexity of
-                  the visit.
+                  {copy.feeNote}
                 </p>
               </div>
             </div>
@@ -184,14 +146,14 @@ export default function HowItWorksPage() {
       <Section className="bg-mist py-24">
         <Container className="grid gap-12 lg:grid-cols-[0.72fr_1.28fr]">
           <MotionReveal>
-            <p className="label-caps text-cobalt">New to telehealth</p>
+            <p className="label-caps text-cobalt">{copy.reassuranceLabel}</p>
             <h2 className="mt-5 max-w-xl font-display text-4xl font-medium leading-[1.06] text-ink md:text-5xl">
-              The process should feel calm before the visit begins.
+              {copy.reassuranceTitle}
             </h2>
           </MotionReveal>
           <div className="grid gap-4">
-            {reassuranceRows.map((item, index) => (
-              <MotionReveal delay={index * 0.04} key={item.label}>
+            {copy.reassuranceRows.map((item, index) => (
+              <MotionReveal delay={index * 0.04} key={`${index}-${item.label}`}>
                 <article className="grid gap-4 border-t border-line py-6 md:grid-cols-[220px_1fr]">
                   <div className="flex items-center gap-3 text-cobalt">
                     <CheckCircle2 aria-hidden="true" size={21} />
@@ -211,11 +173,10 @@ export default function HowItWorksPage() {
             <div className="grid gap-8 rounded-[28px] border border-line bg-paper p-7 shadow-[0_22px_70px_rgba(7,28,42,0.08)] md:grid-cols-[0.64fr_1.36fr] md:items-center">
               <div className="flex items-center gap-3 text-cobalt">
                 <ShieldCheck aria-hidden="true" size={24} />
-                <p className="label-caps">Important</p>
+                <p className="label-caps">{copy.urgentLabel}</p>
               </div>
               <p className="max-w-4xl font-display text-3xl font-medium leading-[1.08] text-ink md:text-4xl">
-                If symptoms feel urgent, choose urgent or emergency care right
-                away.
+                {copy.urgentNote}
               </p>
             </div>
           </MotionReveal>
@@ -227,19 +188,18 @@ export default function HowItWorksPage() {
           <div>
             <div className="mb-4 flex items-center gap-3 text-aqua">
               <ClipboardCheck aria-hidden="true" size={22} />
-              <p className="label-caps">Start here</p>
+              <p className="label-caps">{copy.closingLabel}</p>
             </div>
             <h2 className="font-display text-4xl font-medium">
-              One simple first step.
+              {copy.closingTitle}
             </h2>
             <p className="mt-3 max-w-2xl leading-7 text-paper/78">
-              Book through the practice scheduling link, and the next steps are
-              explained from there.
+              {copy.closingDescription}
             </p>
           </div>
           <ButtonLink href={bookingUrl} variant="mist">
             <CalendarCheck aria-hidden="true" size={20} />
-            Book an Appointment
+            {copy.bookCta}
           </ButtonLink>
         </Container>
       </Section>

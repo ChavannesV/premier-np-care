@@ -4,7 +4,10 @@ import { Container } from "@/components/container";
 import { HeroPortrait } from "@/components/home/hero-portrait";
 import { HeroEntrance, HeroItem } from "@/components/motion-reveal";
 import { bookingUrl } from "@/lib/config";
-import { insuranceAccepted } from "@/lib/content";
+import { insuranceAccepted, practiceSettings } from "@/lib/content";
+import { pageContent } from "@/content/page-content";
+
+const copy = pageContent.home;
 
 export function HomeHero() {
   return (
@@ -28,7 +31,7 @@ export function HomeHero() {
           <HeroEntrance className="max-w-xl">
             <HeroItem>
               <p className="label-caps text-harbor">
-                Nurse Practitioner-led telehealth · New Jersey
+                {copy.heroEyebrow}
               </p>
               <span
                 aria-hidden="true"
@@ -38,32 +41,33 @@ export function HomeHero() {
 
             <HeroItem>
               <h1 className="mt-5 font-display text-4xl font-medium leading-[1.05] text-ink sm:text-5xl md:text-[3.5rem] md:leading-[1.02]">
-                Care you can understand, from a clinician{" "}
+                {copy.heroTitle}{" "}
                 <em className="hero-emphasis font-normal italic text-harbor">
-                  you know.
+                  {copy.heroEmphasis}
                 </em>
               </h1>
             </HeroItem>
 
             <HeroItem>
               <p className="mt-6 max-w-lg text-lg font-medium leading-8 text-ink/74">
-                Personal telehealth with Virginie Chavannes, APN — calm, direct,
-                and clearly explained before you book.
+                {copy.heroDescription}
               </p>
             </HeroItem>
 
-            <HeroItem>
-              <p className="mt-6 inline-flex items-center gap-2.5 rounded-full border border-line bg-paper/80 px-4 py-2 text-sm font-semibold text-ink/78">
-                <span
-                  aria-hidden="true"
-                  className="pulse-dot relative flex h-2.5 w-2.5"
-                >
-                  <span className="absolute inline-flex h-full w-full rounded-full bg-harbor/60" />
-                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-harbor" />
-                </span>
-                Accepting new patients
-              </p>
-            </HeroItem>
+            {practiceSettings.acceptingNewPatients ? (
+              <HeroItem>
+                <p className="mt-6 inline-flex items-center gap-2.5 rounded-full border border-line bg-paper/80 px-4 py-2 text-sm font-semibold text-ink/78">
+                  <span
+                    aria-hidden="true"
+                    className="pulse-dot relative flex h-2.5 w-2.5"
+                  >
+                    <span className="absolute inline-flex h-full w-full rounded-full bg-harbor/60" />
+                    <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-harbor" />
+                  </span>
+                  {practiceSettings.statusLabel}
+                </p>
+              </HeroItem>
+            ) : null}
 
             <HeroItem>
               <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -74,14 +78,14 @@ export function HomeHero() {
                   variant="cobalt"
                 >
                   <CalendarCheck aria-hidden="true" size={20} />
-                  Book an Appointment
+                  {copy.bookCta}
                 </ButtonLink>
                 <ButtonLink
                   className="group/cta transition-transform duration-300 hover:-translate-y-0.5"
                   href="/about"
                   variant="secondary"
                 >
-                  Meet the Provider
+                  {copy.providerCta}
                   <ArrowRight
                     aria-hidden="true"
                     className="transition-transform duration-300 group-hover/cta:translate-x-1"
@@ -93,15 +97,15 @@ export function HomeHero() {
 
             <HeroItem>
               <p className="mt-6 flex flex-wrap items-center gap-x-2.5 gap-y-1.5 text-sm font-medium text-ink/62">
-                <span>Provider-led visits</span>
+                <span>{copy.trustOne}</span>
                 <span aria-hidden="true" className="text-gold">
                   ·
                 </span>
-                <span>Honest telehealth boundaries</span>
+                <span>{copy.trustTwo}</span>
                 <span aria-hidden="true" className="text-gold">
                   ·
                 </span>
-                <span>Secure platform</span>
+                <span>{copy.trustThree}</span>
               </p>
             </HeroItem>
           </HeroEntrance>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageContent, pageMetadata } from "@/content/page-content";
 import { CalendarCheck, Mail, MapPin, Phone, ShieldCheck } from "lucide-react";
 import { BookingEmbedSlot } from "@/components/booking-embed-slot";
 import { ContactForm } from "@/components/contact/contact-form";
@@ -6,24 +7,19 @@ import { Container } from "@/components/container";
 import { MotionReveal } from "@/components/motion-reveal";
 import { PageIntro } from "@/components/page-intro";
 import { Section } from "@/components/section";
-import { isPhoneConfirmed, phoneNumber } from "@/lib/config";
-import { insuranceAccepted, practiceDetails } from "@/lib/content";
+import { bookingUrl, isPhoneConfirmed, phoneNumber } from "@/lib/config";
+import { insuranceAccepted, practiceDetails, practiceSettings } from "@/lib/content";
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description:
-    "Book an appointment with Premier NP Care or send a general, non-urgent question to the practice.",
-  alternates: {
-    canonical: "/contact",
-  },
-};
+const copy = pageContent.contact;
+
+export const metadata: Metadata = pageMetadata("contact");
 
 const contactRows = [
   {
     label: "Phone",
     value: isPhoneConfirmed
       ? phoneNumber
-      : "Use the form below — a phone line is being set up.",
+      : copy.phoneFallback,
     icon: Phone,
   },
   {
@@ -43,7 +39,7 @@ const contactRows = [
   },
   {
     label: "Email",
-    value: "Use the general inquiry form below.",
+    value: copy.emailNote,
     icon: Mail,
   },
   {
@@ -51,12 +47,6 @@ const contactRows = [
     value: practiceDetails.address,
     icon: MapPin,
   },
-];
-
-const safetyNotes = [
-  "For urgent symptoms, call 911 or use urgent care.",
-  "Use the form for general questions and booking help.",
-  "Visit instructions are shared after your appointment is scheduled.",
 ];
 
 export default function ContactPage() {
@@ -67,23 +57,21 @@ export default function ContactPage() {
           <div className="rounded-[22px] border border-line bg-paper/82 p-5 shadow-[0_16px_50px_rgba(7,28,42,0.06)]">
             <div className="flex items-center gap-3 text-cobalt">
               <Phone aria-hidden="true" size={22} />
-              <p className="label-caps">Prefer to call?</p>
+              <p className="label-caps">{copy.asideLabel}</p>
             </div>
             <p className="mt-3 leading-7 text-ink/76">
-              Use the calendar to request your consultation, or send a message
-              if you have a general question before booking.
+              {copy.asideDescription}
             </p>
             <p className="mt-3 font-semibold leading-7 text-ink">
               {practiceDetails.schedule}
             </p>
           </div>
         }
-        eyebrow="Contact"
-        title="Book care or send a general question."
+        eyebrow={copy.heroLabel}
+        title={copy.heroTitle}
       >
         <p>
-          Start with the booking card or send a message below. The goal is to
-          make the next step feel simple.
+          {copy.heroDescription}
         </p>
       </PageIntro>
 
@@ -93,21 +81,19 @@ export default function ContactPage() {
             <div>
               <div className="flex items-center gap-3 text-cobalt">
                 <CalendarCheck aria-hidden="true" size={24} />
-                <p className="label-caps">Booking first</p>
+                <p className="label-caps">{copy.bookingLabel}</p>
               </div>
               <h2 className="mt-5 max-w-lg font-display text-4xl font-medium leading-[1.06] text-ink md:text-5xl">
-                The easiest way to begin is right here.
+                {copy.bookingTitle}
               </h2>
               <p className="mt-5 max-w-lg leading-8 text-ink/70">
-                Choose a consultation time directly through the practice
-                calendar. The scheduler opens in a focused Tebra window so the
-                booking process stays clear and easy to complete.
+                {copy.bookingDescription}
               </p>
             </div>
           </MotionReveal>
 
           <MotionReveal delay={0.1}>
-            <BookingEmbedSlot />
+            <BookingEmbedSlot bookingUrl={bookingUrl} practiceName={practiceSettings.name} />
           </MotionReveal>
         </Container>
       </Section>
@@ -116,18 +102,16 @@ export default function ContactPage() {
         <Container className="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
           <MotionReveal>
             <div>
-              <p className="label-caps text-cobalt">General inquiries</p>
+              <p className="label-caps text-cobalt">{copy.inquiryLabel}</p>
               <h2 className="mt-5 max-w-lg font-display text-4xl font-medium leading-[1.06] text-ink md:text-5xl">
-                A simple form for questions and booking help.
+                {copy.inquiryTitle}
               </h2>
               <p className="mt-5 max-w-lg leading-8 text-ink/70">
-                Send a quick note and the practice can help with the next step.
-                Keep the message general; detailed health conversations belong
-                in the visit.
+                {copy.inquiryDescription}
               </p>
               <div className="mt-8 grid gap-3 border-y border-line py-5">
-                {safetyNotes.map((note) => (
-                  <div className="flex items-start gap-3" key={note}>
+                {copy.safetyNotes.map((note, index) => (
+                  <div className="flex items-start gap-3" key={`${index}-${note}`}>
                     <ShieldCheck
                       aria-hidden="true"
                       className="mt-1 shrink-0 text-cobalt"
@@ -154,9 +138,9 @@ export default function ContactPage() {
       <Section className="bg-paper py-24">
         <Container className="grid gap-12 lg:grid-cols-[0.72fr_1.28fr]">
           <MotionReveal>
-            <p className="label-caps text-cobalt">Practice info</p>
+            <p className="label-caps text-cobalt">{copy.practiceLabel}</p>
             <h2 className="mt-5 max-w-xl font-display text-4xl font-medium leading-[1.06] text-ink md:text-5xl">
-              A few ways to reach the practice.
+              {copy.practiceTitle}
             </h2>
           </MotionReveal>
 
@@ -176,12 +160,7 @@ export default function ContactPage() {
                       </p>
                       {row.label === "Payment" ? (
                         <p className="mt-2 text-sm leading-6 text-ink/58">
-                          Including{" "}
-                          <span className="font-semibold text-harbor">
-                            {insuranceAccepted.featured.join(" and ")}
-                          </span>
-                          , UnitedHealthcare, Aetna, AmeriHealth, and self pay.
-                          {" "}
+                          {insuranceAccepted.examples.join(", ")}.{" "}
                           {insuranceAccepted.note}
                         </p>
                       ) : null}

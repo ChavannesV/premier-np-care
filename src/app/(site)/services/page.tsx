@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageContent, pageMetadata } from "@/content/page-content";
 import Image from "next/image";
 import {
   ArrowRight,
@@ -13,14 +14,9 @@ import { PageIntro } from "@/components/page-intro";
 import { Section } from "@/components/section";
 import { insuranceAccepted, safetyBoundaries, services } from "@/lib/content";
 
-export const metadata: Metadata = {
-  title: "Services",
-  description:
-    "Explore preventive care, common illness visits, chronic disease management, and mental health services at Premier NP Care.",
-  alternates: {
-    canonical: "/services",
-  },
-};
+const copy = pageContent.services;
+
+export const metadata: Metadata = pageMetadata("services");
 
 export default function ServicesPage() {
   return (
@@ -30,30 +26,28 @@ export default function ServicesPage() {
           <div className="rounded-[22px] border border-line bg-paper/82 p-5 shadow-[0_16px_50px_rgba(7,28,42,0.06)]">
             <div className="flex items-center gap-3 text-cobalt">
               <ShieldCheck aria-hidden="true" size={22} />
-              <p className="label-caps">Patients 14 and up</p>
+              <p className="label-caps">{copy.ageLabel}</p>
             </div>
             <p className="mt-3 leading-7 text-ink/74">
-              Every category below states its own scope, so you always know
-              when a concern fits telehealth and when in-person care is safer.
+              {copy.asideDescription}
             </p>
             <p className="mt-4 border-t border-line pt-4 text-sm leading-6 text-ink/66">
               {insuranceAccepted.summary}
             </p>
           </div>
         }
-        eyebrow="Services"
+        eyebrow={copy.heroLabel}
         title={
           <>
-            Care options that feel{" "}
+            {copy.heroTitle}{" "}
             <em className="font-normal italic text-cobalt">
-              simple to understand.
+              {copy.heroEmphasis}
             </em>
           </>
         }
       >
         <p>
-          Premier NP Care provides patient-centered primary and preventive care
-          for everyday health needs, common illnesses, and ongoing conditions.
+          {copy.heroDescription}
         </p>
       </PageIntro>
 
@@ -61,15 +55,14 @@ export default function ServicesPage() {
         <Container>
           <div className="grid gap-8 lg:grid-cols-[0.68fr_1.32fr] lg:items-end">
             <MotionReveal>
-              <p className="label-caps text-cobalt">Services provided</p>
+              <p className="label-caps text-cobalt">{copy.servicesLabel}</p>
               <h2 className="mt-5 max-w-xl font-display text-4xl font-medium leading-[1.06] text-ink md:text-5xl">
-                Four clear care areas, with the details patients ask for.
+                {copy.servicesTitle}
               </h2>
             </MotionReveal>
             <MotionReveal delay={0.08}>
               <p className="max-w-2xl border-y border-gold/35 py-6 text-lg leading-8 text-ink/70">
-                Each category lists what is included so patients can find the
-                right starting point without guessing.
+                {copy.servicesDescription}
               </p>
             </MotionReveal>
           </div>
@@ -97,7 +90,7 @@ export default function ServicesPage() {
                         <span className="flex h-8 w-8 items-center justify-center rounded-full bg-deep-navy text-paper">
                           <Icon aria-hidden="true" size={16} />
                         </span>
-                        Service category 0{index + 1}
+                        {copy.categoryLabel} {String(index + 1).padStart(2, "0")}
                       </div>
                     </div>
 
@@ -123,7 +116,7 @@ export default function ServicesPage() {
                         <div className="rounded-[14px] border border-cyan/25 bg-mist/60 p-3.5">
                           <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-harbor">
                             <CheckCircle2 aria-hidden="true" size={14} />
-                            Helpful for
+                            {copy.fitLabel}
                           </p>
                           <p className="mt-1.5 text-sm leading-6 text-ink/66">
                             {service.fit}
@@ -132,7 +125,7 @@ export default function ServicesPage() {
                         <div className="rounded-[14px] border border-warn/25 bg-warn/6 p-3.5">
                           <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-warn">
                             <TriangleAlert aria-hidden="true" size={14} />
-                            Consider in-person
+                            {copy.boundaryLabel}
                           </p>
                           <p className="mt-1.5 text-sm leading-6 text-ink/66">
                             {service.boundary}
@@ -141,7 +134,7 @@ export default function ServicesPage() {
                       </div>
 
                       <div className="mt-6 border-t border-line pt-5">
-                        <p className="label-caps text-cobalt">Includes</p>
+                        <p className="label-caps text-cobalt">{copy.includesLabel}</p>
                         <ul className="mt-4 grid gap-2.5 sm:grid-cols-2">
                           {service.items.map((item) => (
                             <li
@@ -172,7 +165,7 @@ export default function ServicesPage() {
       <Section className="border-y border-line bg-porcelain py-16">
         <Container>
           <MotionReveal>
-            <p className="label-caps text-warn">Know the limits</p>
+            <p className="label-caps text-warn">{copy.safetyLabel}</p>
             <div className="mt-8 grid gap-10 lg:grid-cols-3 lg:gap-8">
               {safetyBoundaries.map((item) => (
                 <div className="border-t border-ink/12 pt-5" key={item.title}>
@@ -193,11 +186,10 @@ export default function ServicesPage() {
         <Container className="grid gap-6 md:grid-cols-[1fr_auto] md:items-center">
           <div>
             <h2 className="font-display text-4xl font-medium">
-              Not sure where your concern fits?
+              {copy.closingTitle}
             </h2>
             <p className="mt-3 max-w-2xl leading-7 text-paper/76">
-              Book a visit or send a general question. If symptoms feel urgent,
-              choose urgent or emergency care right away.
+              {copy.closingDescription}
             </p>
           </div>
           <ButtonLink
@@ -205,7 +197,7 @@ export default function ServicesPage() {
             href="/contact"
             variant="mist"
           >
-            Contact the Practice
+            {copy.contactCta}
             <ArrowRight aria-hidden="true" size={19} />
           </ButtonLink>
         </Container>

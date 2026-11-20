@@ -9,7 +9,6 @@ import {
   X,
 } from "lucide-react";
 import { Button, ButtonLink } from "@/components/button";
-import { bookingUrl } from "@/lib/config";
 
 const bookingDetails = [
   {
@@ -29,7 +28,7 @@ const bookingDetails = [
   },
 ];
 
-export function BookingEmbedSlot() {
+export function BookingEmbedSlot({ bookingUrl, practiceName }: { bookingUrl: string; practiceName: string }) {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -69,7 +68,7 @@ export function BookingEmbedSlot() {
           </div>
 
           <h2 className="mt-5 max-w-xl font-display text-4xl font-semibold leading-tight text-deep-navy md:text-5xl">
-            Book through the Premier NP Care calendar.
+            Book through the {practiceName} calendar.
           </h2>
           <p className="mt-4 max-w-2xl text-base leading-7 text-ink/68">
             Choose an appointment time in the practice scheduling system.
@@ -117,7 +116,7 @@ export function BookingEmbedSlot() {
               className="flex items-center justify-between gap-4 border-b border-line px-4 py-3 md:px-5"
             >
               <div>
-                <p className="label-caps text-cobalt">Premier NP Care</p>
+                <p className="label-caps text-cobalt">{practiceName}</p>
                 <h2 className="font-display text-2xl font-semibold text-ink">
                   Appointment Calendar
                 </h2>
@@ -135,7 +134,7 @@ export function BookingEmbedSlot() {
               className="min-h-0 flex-1 bg-white"
               loading="lazy"
               src={bookingUrl}
-              title="Premier NP Care appointment calendar"
+              title={`${practiceName} appointment calendar`}
             />
           </div>
         </div>

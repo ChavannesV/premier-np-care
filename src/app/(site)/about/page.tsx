@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageContent, pageMetadata } from "@/content/page-content";
 import { ArrowRight, CalendarCheck, ShieldCheck, Users } from "lucide-react";
 import { ArchPortrait } from "@/components/arch-portrait";
 import { ButtonLink } from "@/components/button";
@@ -8,19 +9,15 @@ import { Section } from "@/components/section";
 import { bookingUrl } from "@/lib/config";
 import {
   missionStatement,
+  providerDetails,
   patientFit,
   providerBio,
   providerStandards,
 } from "@/lib/content";
 
-export const metadata: Metadata = {
-  title: "Provider",
-  description:
-    "Meet Virginie Chavannes, APN, and learn how Premier NP Care approaches provider-led telehealth visits.",
-  alternates: {
-    canonical: "/about",
-  },
-};
+const copy = pageContent.about;
+
+export const metadata: Metadata = pageMetadata("about");
 
 export default function AboutPage() {
   return (
@@ -37,17 +34,15 @@ export default function AboutPage() {
         />
         <Container className="relative grid items-center gap-12 py-14 md:py-20 lg:grid-cols-[1fr_0.62fr] lg:gap-16">
           <MotionReveal>
-            <p className="label-caps text-cobalt">Meet your provider</p>
+            <p className="label-caps text-cobalt">{copy.heroLabel}</p>
             <h1 className="mt-6 max-w-4xl font-display text-5xl font-medium leading-[1.02] text-ink md:text-6xl">
-              Care feels different when the clinician is{" "}
+              {copy.heroTitle}{" "}
               <em className="font-normal italic text-cobalt">
-                visible from the start.
+                {copy.heroEmphasis}
               </em>
             </h1>
             <p className="mt-6 max-w-2xl text-xl leading-8 text-ink/72">
-              Premier NP Care is built around direct access to Virginie
-              Chavannes, APN — practical telehealth guidance, and a visit
-              experience that explains what happens next.
+              {copy.heroDescription}
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <ButtonLink
@@ -57,42 +52,42 @@ export default function AboutPage() {
                 variant="cobalt"
               >
                 <CalendarCheck aria-hidden="true" size={20} />
-                Book an Appointment
+                {copy.bookCta}
               </ButtonLink>
               <ButtonLink
                 className="transition-transform duration-300 hover:-translate-y-0.5"
                 href="/services"
                 variant="secondary"
               >
-                View Services
+                {copy.servicesCta}
                 <ArrowRight aria-hidden="true" size={19} />
               </ButtonLink>
             </div>
             <p className="mt-8 flex flex-wrap items-center gap-x-2.5 gap-y-1.5 border-t border-ink/10 pt-6 text-sm text-ink/56">
-              <span>Board-certified</span>
+              <span>{copy.trustOne}</span>
               <span aria-hidden="true" className="text-gold">
                 ·
               </span>
-              <span>Evidence-based care</span>
+              <span>{copy.trustTwo}</span>
               <span aria-hidden="true" className="text-gold">
                 ·
               </span>
-              <span>Licensed in New Jersey</span>
+              <span>{copy.trustThree}</span>
             </p>
           </MotionReveal>
 
           <ArchPortrait
-            alt="Portrait of Virginie Chavannes, APN."
-            credential="Nurse Practitioner · Telehealth · New Jersey"
-            name="Virginie Chavannes, APN"
+            alt={providerDetails.photoAlt}
+            credential={copy.portraitCredential}
+            name={providerDetails.displayName}
             overlay={
               <span className="inline-flex items-center gap-2 rounded-full border border-white/70 bg-paper/92 px-4 py-2 text-sm font-semibold text-harbor shadow-[0_14px_34px_rgba(26,53,87,0.18)] backdrop-blur">
                 <ShieldCheck aria-hidden="true" size={16} />
-                Board-Certified
+                {copy.portraitBadge}
               </span>
             }
             sizes="(min-width: 1024px) 32vw, 90vw"
-            src="/images/virginie-chavannes.jpeg"
+            src={providerDetails.photo}
           />
         </Container>
       </section>
@@ -100,9 +95,9 @@ export default function AboutPage() {
       <Section className="bg-paper py-24">
         <Container>
           <MotionReveal>
-            <p className="label-caps text-cobalt">Her story</p>
+            <p className="label-caps text-cobalt">{copy.storyLabel}</p>
             <h2 className="mt-5 max-w-2xl font-display text-4xl font-medium leading-[1.06] text-ink md:text-5xl">
-              A practice shaped around listening first.
+              {copy.storyTitle}
             </h2>
           </MotionReveal>
 
@@ -137,9 +132,9 @@ export default function AboutPage() {
         />
         <Container className="relative grid gap-12 lg:grid-cols-[0.72fr_1.28fr]">
           <MotionReveal>
-            <p className="label-caps text-aqua">Visit standards</p>
+            <p className="label-caps text-aqua">{copy.standardsLabel}</p>
             <h2 className="mt-5 max-w-xl font-display text-4xl font-medium leading-tight md:text-5xl">
-              What the visit should feel like for patients.
+              {copy.standardsTitle}
             </h2>
           </MotionReveal>
 
@@ -173,9 +168,9 @@ export default function AboutPage() {
         />
         <Container className="relative grid gap-12 lg:grid-cols-[0.72fr_1.28fr]">
           <MotionReveal>
-            <p className="label-caps text-cobalt">Mission statement</p>
+            <p className="label-caps text-cobalt">{copy.missionLabel}</p>
             <h2 className="mt-5 max-w-xl font-display text-4xl font-medium leading-[1.06] text-ink md:text-5xl">
-              Compassion, respect, and clinical excellence.
+              {copy.missionTitle}
             </h2>
           </MotionReveal>
 
@@ -192,7 +187,7 @@ export default function AboutPage() {
                 {missionStatement}
               </p>
               <footer className="relative mt-6 text-sm font-semibold text-harbor">
-                Virginie Chavannes, APN
+                {providerDetails.displayName}
               </footer>
             </blockquote>
           </MotionReveal>
@@ -204,10 +199,10 @@ export default function AboutPage() {
           <MotionReveal>
             <div className="flex items-center gap-3 text-cobalt">
               <Users aria-hidden="true" size={22} />
-              <p className="label-caps">Patient fit</p>
+              <p className="label-caps">{copy.fitLabel}</p>
             </div>
             <h2 className="mt-5 max-w-xl font-display text-4xl font-medium leading-[1.06] text-ink md:text-5xl">
-              Designed for patients who want a direct, unhurried relationship.
+              {copy.fitTitle}
             </h2>
           </MotionReveal>
           <div className="grid gap-4">
