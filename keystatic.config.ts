@@ -2,10 +2,18 @@ import { config, fields, singleton } from "@keystatic/core";
 import { formats, iconOptions, limits, weekdays } from "./src/content/content-rules";
 import { imageField, optionalText, requiredText } from "./src/content/editor-fields";
 import { pageSingletons } from "./src/content/page-editor";
+import { resolveEditorStorage } from "./src/lib/editor-storage";
 
 const DEFAULT_REPO = "supertrens/premier-np-care";
 const json = { data: "json" } as const;
-const useLocalStorage = process.env.NODE_ENV === "development" && process.env.NEXT_PUBLIC_KEYSTATIC_STORAGE !== "github";
+const editorStorage = resolveEditorStorage({
+  mode: process.env.NEXT_PUBLIC_KEYSTATIC_STORAGE,
+  cloudProject: process.env.NEXT_PUBLIC_KEYSTATIC_CLOUD_PROJECT,
+  isDevelopment: process.env.NODE_ENV === "development",
+  repo: githubRepo(),
+});
+export const editorConfigurationError = editorStorage.error;
+const useLocalStorage = editorStorage.storage.kind === "local";
 const publishNote = useLocalStorage
   ? "Save updates the files in this local checkout. Refresh the local website to see your changes; nothing is published to GitHub."
   : "Save commits your changes to the selected GitHub branch. Changes on the production branch go live after the deployment succeeds.";
@@ -44,9 +52,8 @@ function cards(label: string, withIcon = false) {
 }
 
 export default config({
-  storage: useLocalStorage
-    ? { kind: "local" }
-    : { kind: "github", repo: githubRepo() },
+  storage: editorStorage.storage,
+  ...(editorStorage.cloud ? { cloud: editorStorage.cloud } : {}),
   ui: {
     brand: { name: "Premier NP Care" },
     navigation: {

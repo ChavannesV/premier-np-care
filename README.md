@@ -1,6 +1,6 @@
 # Premier NP Care
 
-A five-page marketing website for Premier NP Care, a Nurse Practitioner-led telehealth-affiliated practice. The public site is informational only: no patient portal, database, scheduling logic, or EHR integration. A private Keystatic editor uses GitHub sign-in to save public website content as JSON in this repository.
+A five-page marketing website for Premier NP Care, a Nurse Practitioner-led telehealth-affiliated practice. The public site is informational only: no patient portal, database, scheduling logic, or EHR integration. A private Keystatic editor saves public website content as JSON in this repository. It supports direct GitHub login or client email/password and passkey login through Keystatic Cloud.
 
 ## Run locally
 
@@ -25,7 +25,8 @@ No patient information belongs in the editor: it manages public website content.
 ## Editing the website
 
 In production, bookmark `https://www.premiernpcare.com/admin` and sign in
-with a GitHub account that has write access to the repository.
+with the account invited to the client's Keystatic Cloud team, or a GitHub
+account with repository write access when direct GitHub mode is configured.
 
 | Editor section | What can be changed |
 | --- | --- |
@@ -59,7 +60,7 @@ file name and field errors.
 ### Content files
 
 - `src/content/data/`: editor-managed content.
-- `keystatic.config.ts`: GitHub/local storage and editor sections.
+- `keystatic.config.ts`: local, GitHub or Cloud storage and editor sections.
 - `src/content/page-editor.ts`: page editor fields.
 - `src/lib/content.ts`: shared content exports consumed by the website.
 - `src/lib/config.ts`: booking and phone values from editable practice settings.
@@ -68,6 +69,52 @@ file name and field errors.
 `NEXT_PUBLIC_BOOKING_URL` and `NEXT_PUBLIC_PHONE_NUMBER` no longer override the
 editor. Update those fields under Practice information instead. Email delivery
 credentials and the contact form destination remain environment variables.
+
+### Client handover with email or passkey login (recommended)
+
+Keystatic Cloud handles editor authentication while content and ordinary image
+uploads remain in GitHub. Editors can use email/password or passkeys without a
+GitHub account. A GitHub account or organization is still needed to **own the
+repository** after transfer. The client should own their Cloud team, repository,
+Vercel project and domain; avoid depending on the developer's personal accounts.
+
+1. Transfer the GitHub repository to the client's account/organization and the
+   Vercel project to their team. Confirm the Git integration, production branch
+   `main`, domain and existing contact-email settings after transfer.
+2. Create a dedicated **client-owned** team/project at
+   [Keystatic Cloud](https://keystatic.cloud). Connect the transferred repository
+   and grant its GitHub integration access to that repository. Copy the actual
+   `team/project` identifier from the Cloud project's settings.
+3. Invite the client's editors to that Cloud team. Team members can access all
+   projects in their team, so keep different clients in separate teams. Cloud
+   currently allows up to three users per team on its free plan; confirm current
+   [pricing and authentication details](https://keystatic.com/docs/cloud).
+4. Set these **Production** variables in the client's Vercel project:
+
+   ```text
+   NEXT_PUBLIC_KEYSTATIC_STORAGE=cloud
+   NEXT_PUBLIC_KEYSTATIC_CLOUD_PROJECT=actual-client-team/actual-project
+   ```
+
+   Cloud mode does not need the four direct-GitHub `KEYSTATIC_*` credentials
+   listed below. `NEXT_PUBLIC_KEYSTATIC_REPO` is used only by direct GitHub mode;
+   update it to the transferred repository if retaining that option.
+5. Redeploy after changing these build-time variables. The Cloud OAuth return
+   path is `/keystatic/cloud/oauth/callback`; follow the project's Cloud setup
+   for its production domain. Do not use the direct-GitHub API callback below.
+6. Test **as the client**: open `/admin`, sign in, edit a small piece of content,
+   Save on `main`, verify its GitHub commit and Vercel production deployment,
+   then undo the change. If Vercel blocks the commit author, resolve the account/
+   team permissions or plan before handover. A successful editor save alone
+   does not prove auto-publishing works.
+7. Give the client the `/admin` bookmark and demonstrate edits, image uploads,
+   waiting for deployment and reverting a change. Once their access and
+   publishing work, remove the developer's access if they want full handover.
+
+The code supports Cloud mode now; connecting a real Cloud project and testing
+client authentication are separate setup steps. Leaving storage unset preserves
+local editing in development and direct GitHub mode in production. Invalid
+Cloud configuration shows a setup message, without breaking the public site.
 
 ### Connect GitHub publishing (one-time setup)
 
@@ -109,6 +156,12 @@ Setup reference: [Keystatic GitHub mode](https://keystatic.com/docs/github-mode)
 
 ## Verification
 
+Storage-mode checks (Node.js 22.18+):
+
+```bash
+node --experimental-strip-types --test scripts/editor-storage.test.mjs
+```
+
 ```bash
 npm run lint
 npm run typecheck
@@ -121,8 +174,8 @@ SMOKE_EDITOR_WRITES=1 npm run smoke  # temporary edit → render → restore
 The smoke test checks public pages, mobile navigation and the local editor.
 With `SMOKE_EDITOR_WRITES=1`, it also makes temporary content edits and restores
 them; that option is limited to a local checkout. It uses installed Google Chrome by default. See the script for
-browser/URL options. Production GitHub login, commits and Vercel republishing
-must be verified once the GitHub App is connected.
+browser/URL options. Production login, commits and Vercel republishing must be verified after
+connecting the chosen GitHub App or Keystatic Cloud project.
 
 ### Dependency maintenance
 
