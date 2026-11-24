@@ -4,7 +4,7 @@ import { imageField, optionalText, requiredText } from "./src/content/editor-fie
 import { pageSingletons } from "./src/content/page-editor";
 import { resolveEditorStorage } from "./src/lib/editor-storage";
 
-const DEFAULT_REPO = "supertrens/premier-np-care";
+const DEFAULT_REPO = "ChavannesV/premier-np-care";
 const json = { data: "json" } as const;
 const editorStorage = resolveEditorStorage({
   mode: process.env.NEXT_PUBLIC_KEYSTATIC_STORAGE,

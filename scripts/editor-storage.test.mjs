@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { resolveEditorStorage } from "../src/lib/editor-storage.ts";
 
-const repo = "supertrens/premier-np-care";
+const repo = "ChavannesV/premier-np-care";
 
 test("development defaults to local and production defaults to GitHub", () => {
   assert.equal(resolveEditorStorage({ repo, isDevelopment: true }).storage.kind, "local");

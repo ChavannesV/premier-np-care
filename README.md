@@ -120,7 +120,7 @@ Cloud configuration shows a setup message, without breaking the public site.
 
 1. Connect this repository to the Vercel project and confirm its production
    branch is `main`. The default repository is
-   `supertrens/premier-np-care`; set `NEXT_PUBLIC_KEYSTATIC_REPO=owner/name` if
+   `ChavannesV/premier-np-care`; set `NEXT_PUBLIC_KEYSTATIC_REPO=owner/name` if
    it changes. Do not copy the AllAges GitHub App credentials.
 2. Set `NEXT_PUBLIC_KEYSTATIC_STORAGE=github` locally and restart `npm run dev`.
    With no Keystatic credentials configured yet, open `/admin` and use the
