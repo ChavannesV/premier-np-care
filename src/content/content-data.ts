@@ -30,6 +30,7 @@ export const practiceData = parseContent("practice", z.object({
     close: requiredText(5, formats.time),
   }), 1, limits.hours),
   phone: optionalText(limits.phone, formats.usPhone),
+  whatsappNumber: optionalText(limits.phone, formats.whatsapp),
   bookingUrl: requiredText(limits.url, formats.httpsUrl),
   acceptingNewPatients: z.boolean().default(false),
   statusLabel: requiredText(limits.shortText),

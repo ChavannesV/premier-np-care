@@ -252,3 +252,11 @@ Google indexing is not instant; allow several days to a few weeks for consistent
 - Confirm `https://www.premiernpcare.com/robots.txt` and `https://www.premiernpcare.com/sitemap.xml` return `200`.
 - Submit the sitemap in Google Search Console.
 - Submit a test contact form in production preview before launch.
+
+### WhatsApp contact
+
+In Keystatic → Practice details, set **WhatsApp number** using `+` and the
+country code (for example `+15612296153`). The Contact page and footer show a
+“Message on WhatsApp” button with a general scheduling greeting. Visitors review
+and send the message themselves. Leave the field blank to hide both buttons.
+Booking buttons continue to use the appointment booking link independently.

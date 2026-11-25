@@ -92,6 +92,7 @@ export default config({
           validation: { length: { min: 1, max: limits.hours } },
         }),
         phone: optionalText("Phone number", limits.phone, { format: formats.usPhone, description: "Include the US area code. Leave blank to hide phone links." }),
+        whatsappNumber: optionalText("WhatsApp number", limits.phone, { format: formats.whatsapp, description: "Include + and the country code, without spaces (for example +15612296153). Leave blank to hide WhatsApp buttons." }),
         bookingUrl: requiredText("Appointment booking link", limits.url, { format: formats.httpsUrl, description: "The scheduling URL used by every Book button and the booking calendar." }),
         acceptingNewPatients: fields.checkbox({ label: "Show the new-patient status", defaultValue: true }),
         statusLabel: requiredText("New-patient status label", limits.shortText, { description: "For example, Accepting new patients. Hide the status above when it should not be displayed." }),

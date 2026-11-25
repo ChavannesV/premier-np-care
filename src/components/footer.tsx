@@ -1,6 +1,7 @@
 import { CalendarCheck, Clock, MapPin, MessageCircle, Phone } from "lucide-react";
 import Link from "next/link";
 import { ButtonLink } from "@/components/button";
+import { WhatsAppButton } from "@/components/whatsapp-button";
 import { Container } from "@/components/container";
 import { bookingUrl, isPhoneConfirmed, phoneNumber } from "@/lib/config";
 import {
@@ -40,11 +41,12 @@ export function Footer() {
               </span>
               {practiceSettings.statusLabel}
             </p> : null}
-            <div className="mt-4">
+            <div className="mt-4 flex flex-wrap gap-3">
               <ButtonLink href={bookingUrl} variant="mist">
                 <CalendarCheck aria-hidden="true" size={19} />
                 Book an Appointment
               </ButtonLink>
+              <WhatsAppButton />
             </div>
           </div>
 

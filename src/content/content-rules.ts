@@ -49,6 +49,10 @@ export const formats = {
     regex: /^https:\/\/(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}(?:[/?#][^\s<>\\]*)?$/,
     message: "Enter a complete public link starting with https:// (without spaces).",
   },
+  whatsapp: {
+    regex: /^\+[1-9][0-9]{9,14}$/,
+    message: "Include + and the country code, using 10–15 digits without spaces, for example +15612296153.",
+  },
   usPhone: {
     regex: /^(?:\+?1[\s().-]*)?(?:\d[\s().-]*){10}$/,
     message: "Enter a US phone number including the area code, for example (201) 555-0123.",

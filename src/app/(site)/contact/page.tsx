@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { pageContent, pageMetadata } from "@/content/page-content";
 import { CalendarCheck, Mail, MapPin, Phone, ShieldCheck } from "lucide-react";
 import { BookingEmbedSlot } from "@/components/booking-embed-slot";
+import { WhatsAppButton } from "@/components/whatsapp-button";
 import { ContactForm } from "@/components/contact/contact-form";
 import { Container } from "@/components/container";
 import { MotionReveal } from "@/components/motion-reveal";
@@ -109,6 +110,9 @@ export default function ContactPage() {
               <p className="mt-5 max-w-lg leading-8 text-ink/70">
                 {copy.inquiryDescription}
               </p>
+              <div className="mt-6">
+                <WhatsAppButton />
+              </div>
               <div className="mt-8 grid gap-3 border-y border-line py-5">
                 {copy.safetyNotes.map((note, index) => (
                   <div className="flex items-start gap-3" key={`${index}-${note}`}>
