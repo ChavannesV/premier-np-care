@@ -92,7 +92,7 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <Section className="bg-paper py-24">
+      <Section className="bg-paper py-14 md:py-24">
         <Container>
           <MotionReveal>
             <p className="label-caps text-cobalt">{copy.storyLabel}</p>
@@ -124,7 +124,7 @@ export default function AboutPage() {
         </Container>
       </Section>
 
-      <Section className="relative overflow-hidden bg-deep-navy py-24 text-paper">
+      <Section className="relative overflow-hidden bg-deep-navy py-14 md:py-24 text-paper">
         <div className="care-current-lines absolute inset-0 opacity-10" />
         <div
           aria-hidden="true"
@@ -160,7 +160,7 @@ export default function AboutPage() {
         </Container>
       </Section>
 
-      <Section className="relative overflow-hidden bg-paper py-24">
+      <Section className="relative overflow-hidden bg-paper py-14 md:py-24">
         <div className="ocean-field absolute inset-0 opacity-70" aria-hidden="true" />
         <div
           aria-hidden="true"
@@ -194,7 +194,7 @@ export default function AboutPage() {
         </Container>
       </Section>
 
-      <Section className="bg-mist py-24">
+      <Section className="bg-mist py-14 md:py-24">
         <Container className="grid gap-12 lg:grid-cols-[0.72fr_1.28fr]">
           <MotionReveal>
             <div className="flex items-center gap-3 text-cobalt">

@@ -1,24 +1,25 @@
 {
   "seoTitle": "Contact",
   "seoDescription": "Book an appointment with {practiceName} or send a general, non-urgent question to the practice.",
-  "phoneFallback": "Use the form below — a phone line is being set up.",
-  "emailNote": "Use the general inquiry form below.",
+  "phoneFallback": "Contact the practice using the general inquiry form.",
+  "emailNote": "Use the general inquiry form on this page.",
   "safetyNotes": [
     "For urgent symptoms, call 911 or use urgent care.",
     "Use the form for general questions and booking help.",
     "Visit instructions are shared after your appointment is scheduled."
   ],
-  "asideLabel": "Prefer to call?",
-  "asideDescription": "Use the calendar to request your consultation, or send a message if you have a general question before booking.",
-  "heroDescription": "Start with the booking card or send a message below. The goal is to make the next step feel simple.",
+  "asideLabel": "Practice hours",
+  "asideDescription": "Appointments and general inquiries are handled during practice hours.",
+  "heroDescription": "Choose an appointment time or get in touch with a general question.",
   "bookingLabel": "Booking first",
-  "bookingTitle": "The easiest way to begin is right here.",
-  "bookingDescription": "Choose a consultation time directly through the practice calendar. The scheduler opens in a focused Tebra window so the booking process stays clear and easy to complete.",
+  "bookingTitle": "Find a time that works for you.",
+  "bookingDescription": "Book directly through Tebra, the practice scheduling system. Your appointment and visit details stay together in one place.",
   "inquiryLabel": "General inquiries",
   "inquiryTitle": "A simple form for questions and booking help.",
   "inquiryDescription": "Send a quick note and the practice can help with the next step. Keep the message general; detailed health conversations belong in the visit.",
   "practiceLabel": "Practice info",
   "practiceTitle": "A few ways to reach the practice.",
   "heroLabel": "Contact",
-  "heroTitle": "Book care or send a general question."
+  "heroTitle": "Book care or send a general question.",
+  "responseTime": "We usually reply within two business days."
 }

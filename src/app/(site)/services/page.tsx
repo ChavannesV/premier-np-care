@@ -51,7 +51,7 @@ export default function ServicesPage() {
         </p>
       </PageIntro>
 
-      <Section className="bg-mist py-20">
+      <Section className="bg-mist py-14 md:py-20">
         <Container>
           <div className="grid gap-8 lg:grid-cols-[0.68fr_1.32fr] lg:items-end">
             <MotionReveal>
@@ -72,7 +72,7 @@ export default function ServicesPage() {
               const Icon = service.icon;
               return (
                 <MotionReveal delay={index * 0.04} key={service.title}>
-                  <article className="grid overflow-hidden rounded-[28px] border border-line bg-paper shadow-[0_22px_70px_rgba(26,53,87,0.06)] transition-all duration-300 hover:-translate-y-1 hover:border-gold/45 hover:shadow-[0_28px_84px_rgba(26,53,87,0.1)] lg:grid-cols-[0.45fr_0.55fr]">
+                  <article id={service.id} className="scroll-mt-40 grid overflow-hidden rounded-[28px] border border-line bg-paper shadow-[0_22px_70px_rgba(26,53,87,0.06)] transition-all duration-300 hover:-translate-y-1 hover:border-gold/45 hover:shadow-[0_28px_84px_rgba(26,53,87,0.1)] lg:grid-cols-[0.45fr_0.55fr]">
                     <div className="relative min-h-[260px] overflow-hidden border-b border-line bg-mist lg:min-h-full lg:border-b-0 lg:border-r">
                       <Image
                         alt={service.imageAlt}

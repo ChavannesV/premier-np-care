@@ -3,15 +3,13 @@ import Link from "next/link";
 import { ButtonLink } from "@/components/button";
 import { WhatsAppButton } from "@/components/whatsapp-button";
 import { Container } from "@/components/container";
-import { bookingUrl, isPhoneConfirmed, phoneNumber } from "@/lib/config";
+import { bookingUrl, isPhoneConfirmed, phoneNumber, phoneHref } from "@/lib/config";
 import {
   insuranceAccepted,
   navItems,
   practiceDetails,
   practiceSettings,
 } from "@/lib/content";
-
-const phoneHref = `tel:${phoneNumber.startsWith("+") ? "+" : ""}${phoneNumber.replace(/\D/g, "")}`;
 
 export function Footer() {
   return (

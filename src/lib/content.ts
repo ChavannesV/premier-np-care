@@ -51,7 +51,21 @@ export const insuranceAccepted = {
   examples: insurance.plans.map((plan) => plan.name),
 };
 
-export const services = resolveTexts(servicesData.items).map((service) => ({ ...service, icon: icons[service.icon] }));
+/** Shared, unique anchors keep service shortcuts aligned with their detail cards. */
+function withServiceAnchors() {
+  const usedIds = new Set<string>();
+  return resolveTexts(servicesData.items).map((service) => {
+    const slug = service.title.normalize("NFKD").replace(/\p{M}/gu, "")
+      .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    const baseId = `service-${slug || "care"}`;
+    let id = baseId;
+    for (let suffix = 2; usedIds.has(id); suffix += 1) id = `${baseId}-${suffix}`;
+    usedIds.add(id);
+    return { ...service, id, icon: icons[service.icon] };
+  });
+}
+
+export const services = withServiceAnchors();
 export const practiceAtAGlance = resolveTexts(sharedData.practiceAtAGlance).map((item) => ({ ...item, icon: icons[item.icon] }));
 export const patientJourney = resolveTexts(sharedData.patientJourney).map((item) => ({ ...item, icon: icons[item.icon] }));
 export const patientFit = resolveTexts(sharedData.patientFit);

@@ -148,6 +148,7 @@ export const pageDefinitions = {
       bookingDescription: text("Booking description", 1200),
       inquiryLabel: text("Inquiry label", 180),
       inquiryTitle: text("Inquiry title", 180),
+      responseTime: text("General inquiry response time", 240),
       inquiryDescription: text("Inquiry description", 1200),
       practiceLabel: text("Practice label", 180),
       practiceTitle: text("Practice title", 180),

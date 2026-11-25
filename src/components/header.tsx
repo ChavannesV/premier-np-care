@@ -5,7 +5,7 @@ import { ButtonLink } from "@/components/button";
 import { Container } from "@/components/container";
 import { MobileNav } from "@/components/mobile-nav";
 import { NavLink } from "@/components/nav-link";
-import { bookingUrl } from "@/lib/config";
+import { bookingUrl, whatsappHref } from "@/lib/config";
 import { navItems, practiceSettings } from "@/lib/content";
 
 export function Header() {
@@ -29,11 +29,11 @@ export function Header() {
           </span>
         </Link>
 
-        <nav aria-label="Primary navigation" className="hidden items-center gap-6 md:flex">
+        <nav aria-label="Primary navigation" className="hidden items-center gap-4 lg:flex">
           {navItems.slice(1).map((item) => (
             <NavLink
               activeClassName="text-ink underline decoration-gold decoration-2 underline-offset-8"
-              className="text-base font-semibold transition-colors hover:text-ink focus-visible:rounded-[10px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+              className="text-sm font-semibold transition-colors hover:text-ink focus-visible:rounded-[10px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
               inactiveClassName="text-ink/68"
               href={item.href}
               key={item.href}
@@ -42,14 +42,14 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="hidden md:block">
-          <ButtonLink className="px-4 py-2" href={bookingUrl} variant="secondary">
+        <div className="hidden items-center gap-2 lg:flex">
+          <ButtonLink className="px-3 py-2 text-sm" href={bookingUrl} variant="cobalt">
             <CalendarCheck aria-hidden="true" size={18} />
-            Book Appointment
+            Book an Appointment
           </ButtonLink>
         </div>
 
-        <MobileNav bookingUrl={bookingUrl} navItems={navItems} practiceName={practiceSettings.name} acceptingNewPatients={practiceSettings.acceptingNewPatients} statusLabel={practiceSettings.statusLabel} />
+        <MobileNav whatsappHref={whatsappHref} bookingUrl={bookingUrl} navItems={navItems} practiceName={practiceSettings.name} acceptingNewPatients={practiceSettings.acceptingNewPatients} statusLabel={practiceSettings.statusLabel} />
       </Container>
     </header>
   );

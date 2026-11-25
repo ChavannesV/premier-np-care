@@ -6,6 +6,10 @@ import { practiceSettings } from "@/lib/content";
 export const bookingUrl = practiceSettings.bookingUrl;
 export const phoneNumber = practiceSettings.phone;
 export const isPhoneConfirmed = phoneNumber.length > 0;
+const phoneDigits = phoneNumber.replace(/\D/g, "");
+export const phoneHref = isPhoneConfirmed
+  ? `tel:+${phoneDigits.length === 10 ? "1" : ""}${phoneDigits}`
+  : "";
 
 export const whatsappHref = practiceSettings.whatsappNumber
   ? `https://wa.me/${practiceSettings.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent(`Hello ${practiceSettings.name}, I have a question about scheduling an appointment.`)}`

@@ -39,7 +39,7 @@ export default function HowItWorksPage() {
         </p>
       </PageIntro>
 
-      <Section className="bg-paper py-24">
+      <Section className="bg-paper py-14 md:py-24">
         <Container>
           <div className="overflow-hidden rounded-[32px] border border-line bg-porcelain shadow-[0_28px_90px_rgba(7,28,42,0.08)]">
             <div className="grid lg:grid-cols-[0.56fr_1.44fr]">
@@ -102,7 +102,7 @@ export default function HowItWorksPage() {
         </Container>
       </Section>
 
-      <Section className="bg-porcelain py-20">
+      <Section className="bg-porcelain py-14 md:py-20">
         <Container>
           <MotionReveal>
             <div className="grid gap-8 rounded-[28px] border border-line bg-paper p-7 shadow-[0_22px_70px_rgba(7,28,42,0.08)] lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
@@ -143,7 +143,7 @@ export default function HowItWorksPage() {
         </Container>
       </Section>
 
-      <Section className="bg-mist py-24">
+      <Section className="bg-mist py-14 md:py-24">
         <Container className="grid gap-12 lg:grid-cols-[0.72fr_1.28fr]">
           <MotionReveal>
             <p className="label-caps text-cobalt">{copy.reassuranceLabel}</p>
@@ -167,7 +167,7 @@ export default function HowItWorksPage() {
         </Container>
       </Section>
 
-      <Section className="bg-porcelain py-20">
+      <Section className="bg-porcelain py-14 md:py-20">
         <Container>
           <MotionReveal>
             <div className="grid gap-8 rounded-[28px] border border-line bg-paper p-7 shadow-[0_22px_70px_rgba(7,28,42,0.08)] md:grid-cols-[0.64fr_1.36fr] md:items-center">

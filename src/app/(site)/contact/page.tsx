@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { pageContent, pageMetadata } from "@/content/page-content";
-import { CalendarCheck, Mail, MapPin, Phone, ShieldCheck } from "lucide-react";
+import { CalendarCheck, Clock, Mail, MapPin, Phone, ShieldCheck } from "lucide-react";
+import Link from "next/link";
+import { ButtonLink } from "@/components/button";
 import { BookingEmbedSlot } from "@/components/booking-embed-slot";
 import { WhatsAppButton } from "@/components/whatsapp-button";
 import { ContactForm } from "@/components/contact/contact-form";
@@ -8,7 +10,7 @@ import { Container } from "@/components/container";
 import { MotionReveal } from "@/components/motion-reveal";
 import { PageIntro } from "@/components/page-intro";
 import { Section } from "@/components/section";
-import { bookingUrl, isPhoneConfirmed, phoneNumber } from "@/lib/config";
+import { bookingUrl, isPhoneConfirmed, phoneNumber, phoneHref } from "@/lib/config";
 import { insuranceAccepted, practiceDetails, practiceSettings } from "@/lib/content";
 
 const copy = pageContent.contact;
@@ -57,7 +59,7 @@ export default function ContactPage() {
         aside={
           <div className="rounded-[22px] border border-line bg-paper/82 p-5 shadow-[0_16px_50px_rgba(7,28,42,0.06)]">
             <div className="flex items-center gap-3 text-cobalt">
-              <Phone aria-hidden="true" size={22} />
+              <Clock aria-hidden="true" size={22} />
               <p className="label-caps">{copy.asideLabel}</p>
             </div>
             <p className="mt-3 leading-7 text-ink/76">
@@ -66,18 +68,35 @@ export default function ContactPage() {
             <p className="mt-3 font-semibold leading-7 text-ink">
               {practiceDetails.schedule}
             </p>
+            {isPhoneConfirmed ? (
+              <a className="mt-3 inline-flex min-h-11 items-center gap-2 font-semibold text-cobalt underline underline-offset-4 focus-visible:rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold" href={phoneHref}>
+                <Phone aria-hidden="true" className="shrink-0" size={18} />
+                Call {phoneNumber}
+              </a>
+            ) : null}
           </div>
         }
         eyebrow={copy.heroLabel}
         title={copy.heroTitle}
       >
-        <p>
-          {copy.heroDescription}
-        </p>
+        <p>{copy.heroDescription}</p>
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <ButtonLink href={bookingUrl} variant="cobalt">
+            <CalendarCheck aria-hidden="true" size={19} />
+            Book an Appointment
+          </ButtonLink>
+          <WhatsAppButton />
+        </div>
+        <Link
+          className="mt-4 inline-block text-base font-semibold text-cobalt underline underline-offset-4 focus-visible:rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+          href="#contact-form"
+        >
+          Send a general inquiry
+        </Link>
       </PageIntro>
 
-      <Section className="bg-paper py-24">
-        <Container className="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
+      <Section className="bg-paper py-14 md:py-24">
+        <Container className="grid gap-8 md:gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
           <MotionReveal>
             <div>
               <div className="flex items-center gap-3 text-cobalt">
@@ -99,8 +118,30 @@ export default function ContactPage() {
         </Container>
       </Section>
 
-      <Section className="bg-mist py-24">
-        <Container className="grid gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
+      <Section className="scroll-mt-36 border-t border-line bg-porcelain py-14 md:py-24" id="insurance">
+        <Container className="grid gap-8 md:gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
+          <div>
+            <p className="label-caps text-cobalt">Coverage</p>
+            <h2 className="mt-4 font-display text-4xl font-medium leading-[1.06] text-ink md:text-5xl">
+              Accepted insurance
+            </h2>
+            <p className="mt-4 leading-7 text-ink/76">{insuranceAccepted.summary}</p>
+          </div>
+          <div>
+            <ul className="flex flex-wrap gap-3" aria-label="Accepted insurance and payment options">
+              {insuranceAccepted.examples.map((plan) => (
+                <li className="rounded-full border border-line bg-paper px-4 py-2 font-semibold text-ink" key={plan}>
+                  {plan}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-5 leading-7 text-ink/76">{insuranceAccepted.note}</p>
+          </div>
+        </Container>
+      </Section>
+
+      <Section className="bg-mist py-14 md:py-24">
+        <Container className="grid gap-8 md:gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
           <MotionReveal>
             <div>
               <p className="label-caps text-cobalt">{copy.inquiryLabel}</p>
@@ -110,9 +151,6 @@ export default function ContactPage() {
               <p className="mt-5 max-w-lg leading-8 text-ink/70">
                 {copy.inquiryDescription}
               </p>
-              <div className="mt-6">
-                <WhatsAppButton />
-              </div>
               <div className="mt-8 grid gap-3 border-y border-line py-5">
                 {copy.safetyNotes.map((note, index) => (
                   <div className="flex items-start gap-3" key={`${index}-${note}`}>
@@ -130,17 +168,21 @@ export default function ContactPage() {
 
           <MotionReveal delay={0.1}>
             <div
-              className="rounded-[28px] border border-line bg-paper p-6 shadow-[0_22px_70px_rgba(26,53,87,0.08)]"
+              className="scroll-mt-40 rounded-[28px] border border-line bg-paper p-6 shadow-[0_22px_70px_rgba(26,53,87,0.08)]"
               id="contact-form"
             >
+              <p className="mb-5 flex items-start gap-2 text-sm font-semibold leading-6 text-ink/75">
+                <Clock aria-hidden="true" className="mt-0.5 shrink-0" size={18} />
+                {copy.responseTime}
+              </p>
               <ContactForm />
             </div>
           </MotionReveal>
         </Container>
       </Section>
 
-      <Section className="bg-paper py-24">
-        <Container className="grid gap-12 lg:grid-cols-[0.72fr_1.28fr]">
+      <Section className="bg-paper py-14 md:py-24">
+        <Container className="grid gap-8 md:gap-12 lg:grid-cols-[0.72fr_1.28fr]">
           <MotionReveal>
             <p className="label-caps text-cobalt">{copy.practiceLabel}</p>
             <h2 className="mt-5 max-w-xl font-display text-4xl font-medium leading-[1.06] text-ink md:text-5xl">
@@ -160,13 +202,19 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <p className="text-lg leading-8 text-ink/76">
-                        {row.value}
+                        {row.label === "Phone" && isPhoneConfirmed ? (
+                          <a className="inline-flex min-h-11 items-center font-semibold text-cobalt underline underline-offset-4 focus-visible:rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold" href={phoneHref}>
+                            {row.value}
+                          </a>
+                        ) : row.value}
                       </p>
                       {row.label === "Payment" ? (
-                        <p className="mt-2 text-sm leading-6 text-ink/58">
-                          {insuranceAccepted.examples.join(", ")}.{" "}
-                          {insuranceAccepted.note}
-                        </p>
+                        <Link
+                          className="mt-2 inline-block font-semibold text-cobalt underline underline-offset-4 focus-visible:rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+                          href="#insurance"
+                        >
+                          View accepted insurance
+                        </Link>
                       ) : null}
                     </div>
                   </article>

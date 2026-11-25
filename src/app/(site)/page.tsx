@@ -20,7 +20,7 @@ export default function Home() {
     <>
       <HomeHero />
 
-      <Section className="relative overflow-hidden bg-deep-navy py-20 text-paper">
+      <Section className="relative overflow-hidden bg-deep-navy py-14 md:py-20 text-paper">
         <div className="care-current-lines absolute inset-0 opacity-10" />
         <div
           aria-hidden="true"
@@ -65,7 +65,7 @@ export default function Home() {
         </Container>
       </Section>
 
-      <Section className="relative overflow-hidden bg-paper py-24">
+      <Section className="relative overflow-hidden bg-paper py-14 md:py-24">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-[radial-gradient(70%_100%_at_50%_0%,rgba(201,238,243,0.4),transparent)]"
@@ -98,7 +98,7 @@ export default function Home() {
                 <MotionReveal className="h-full" delay={index * 0.05} key={service.title}>
                   <Link
                     className="group flex h-full flex-col overflow-hidden rounded-[24px] border border-line bg-[linear-gradient(160deg,#ffffff_0%,#f7fcfd_55%,#f0f9fb_100%)] shadow-[0_14px_40px_rgba(26,53,87,0.07)] transition-all duration-300 hover:-translate-y-1 hover:border-gold/60 hover:shadow-[0_24px_60px_rgba(26,53,87,0.12)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
-                    href="/services"
+                    href={`/services#${service.id}`}
                   >
                     <div className="relative min-h-[210px] overflow-hidden bg-mist">
                       <Image
@@ -157,7 +157,7 @@ export default function Home() {
         </Container>
       </Section>
 
-      <Section className="relative overflow-hidden bg-mist py-20">
+      <Section className="relative overflow-hidden bg-mist py-14 md:py-20">
         <div className="care-current-lines absolute inset-0 opacity-30" />
         <div
           aria-hidden="true"

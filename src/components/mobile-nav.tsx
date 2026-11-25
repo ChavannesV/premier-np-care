@@ -1,38 +1,88 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
-import { CalendarCheck, Menu, X } from "lucide-react";
+import { CalendarCheck, Menu, MessageCircle, X } from "lucide-react";
 import { ButtonLink } from "@/components/button";
 import { cn } from "@/components/utils";
 
 interface MobileNavProps {
   bookingUrl: string;
+  whatsappHref: string | null;
   navItems: { href: string; label: string }[];
   practiceName: string;
   acceptingNewPatients: boolean;
   statusLabel: string;
 }
 
-export function MobileNav({ bookingUrl, navItems, practiceName, acceptingNewPatients, statusLabel }: MobileNavProps) {
+export function MobileNav({ bookingUrl, whatsappHref, navItems, practiceName, acceptingNewPatients, statusLabel }: MobileNavProps) {
   const [open, setOpen] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    if (!open) return;
+
+    const dialog = dialogRef.current;
+    const trigger = triggerRef.current;
+    const previousOverflow = document.body.style.overflow;
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const focusableElements = () => Array.from(
+      dialog?.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex="0"]') ?? [],
+    ).filter((element) => element.getClientRects().length > 0);
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setOpen(false);
+      }
+      if (event.key !== "Tab") return;
+      const elements = focusableElements();
+      const first = elements[0];
+      const last = elements.at(-1);
+      if (!first || !last) return;
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    const containFocus = (event: FocusEvent) => {
+      if (event.target instanceof Node && !dialog?.contains(event.target)) {
+        focusableElements()[0]?.focus();
+      }
+    };
+    const closeOnDesktop = () => {
+      if (desktop.matches) setOpen(false);
+    };
+
+    document.body.style.overflow = "hidden";
+    focusableElements()[0]?.focus();
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("focusin", containFocus);
+    desktop.addEventListener("change", closeOnDesktop);
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("focusin", containFocus);
+      desktop.removeEventListener("change", closeOnDesktop);
+      trigger?.focus();
     };
   }, [open]);
 
   return (
-    <div className="md:hidden">
+    <div className="lg:hidden">
       <button
+        ref={triggerRef}
         aria-expanded={open}
+        aria-controls={open ? "mobile-navigation-dialog" : undefined}
+        aria-haspopup="dialog"
         aria-label="Open navigation"
         className="flex min-h-11 min-w-11 items-center justify-center rounded-[10px] border border-line bg-paper text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
         onClick={() => setOpen(true)}
@@ -44,6 +94,11 @@ export function MobileNav({ bookingUrl, navItems, practiceName, acceptingNewPati
       {open
         ? createPortal(
           <motion.div
+            ref={dialogRef}
+            id="mobile-navigation-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site navigation"
             animate={{ opacity: 1 }}
             className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-deep-navy text-paper"
             initial={shouldReduceMotion ? false : { opacity: 0 }}
@@ -139,6 +194,19 @@ export function MobileNav({ bookingUrl, navItems, practiceName, acceptingNewPati
                   <CalendarCheck aria-hidden="true" size={20} />
                   Book an Appointment
                 </ButtonLink>
+                {whatsappHref ? (
+                  <ButtonLink
+                    className="mt-3 w-full"
+                    href={whatsappHref}
+                    onClick={() => setOpen(false)}
+                    rel="noopener noreferrer"
+                    variant="secondary"
+                  >
+                    <MessageCircle aria-hidden="true" size={20} />
+                    Message on WhatsApp
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </ButtonLink>
+                ) : null}
                 <p className="mt-4 text-center text-xs text-paper/50">
                   For emergencies, call 911
                 </p>

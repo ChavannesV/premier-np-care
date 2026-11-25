@@ -1,5 +1,7 @@
 import { ArrowRight, CalendarCheck } from "lucide-react";
 import { ButtonLink } from "@/components/button";
+import Link from "next/link";
+import { WhatsAppButton } from "@/components/whatsapp-button";
 import { Container } from "@/components/container";
 import { HeroPortrait } from "@/components/home/hero-portrait";
 import { HeroEntrance, HeroItem } from "@/components/motion-reveal";
@@ -27,7 +29,7 @@ export function HomeHero() {
           className="hero-glow hero-glow-c pointer-events-none absolute left-1/3 top-1/4 h-40 w-40 rounded-full bg-gold/15 blur-2xl"
         />
 
-        <Container className="relative grid items-center gap-12 py-16 md:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:py-24">
+        <Container className="relative grid items-center gap-10 py-12 md:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:py-24">
           <HeroEntrance className="max-w-xl">
             <HeroItem>
               <p className="label-caps text-harbor">
@@ -80,32 +82,13 @@ export function HomeHero() {
                   <CalendarCheck aria-hidden="true" size={20} />
                   {copy.bookCta}
                 </ButtonLink>
-                <ButtonLink
-                  className="group/cta transition-transform duration-300 hover:-translate-y-0.5"
-                  href="/about"
-                  variant="secondary"
-                >
-                  {copy.providerCta}
-                  <ArrowRight
-                    aria-hidden="true"
-                    className="transition-transform duration-300 group-hover/cta:translate-x-1"
-                    size={19}
-                  />
-                </ButtonLink>
+                <WhatsAppButton compact />
               </div>
             </HeroItem>
 
             <HeroItem>
-              <p className="mt-6 flex flex-wrap items-center gap-x-2.5 gap-y-1.5 text-sm font-medium text-ink/62">
-                <span>{copy.trustOne}</span>
-                <span aria-hidden="true" className="text-gold">
-                  ·
-                </span>
-                <span>{copy.trustTwo}</span>
-                <span aria-hidden="true" className="text-gold">
-                  ·
-                </span>
-                <span>{copy.trustThree}</span>
+              <p className="mt-4 text-sm leading-6 text-ink/70">
+                Ages {practiceSettings.minimumAge}+ · Insurance &amp; self-pay
               </p>
             </HeroItem>
           </HeroEntrance>
@@ -115,32 +98,24 @@ export function HomeHero() {
       </section>
 
       <div className="border-b border-line bg-paper/90">
-        <Container className="grid items-center gap-4 py-5 md:grid-cols-[auto_1fr] md:gap-8">
-          <p className="shrink-0 text-sm font-semibold leading-6 text-ink/72">
-            {insuranceAccepted.summary}
-          </p>
-          <div className="insurance-marquee relative overflow-hidden">
-            <ul className="insurance-marquee-track flex w-max items-center gap-2">
-              {[0, 1].map((copy) =>
-                insuranceAccepted.examples.map((plan) => {
-                  const featured = insuranceAccepted.featured.includes(plan);
-                  return (
-                    <li aria-hidden={copy === 1 || undefined} key={`${plan}-${copy}`}>
-                      <span
-                        className={
-                          featured
-                            ? "inline-flex whitespace-nowrap rounded-full border border-cyan/30 bg-mist px-3 py-1.5 text-sm font-semibold text-harbor"
-                            : "inline-flex whitespace-nowrap rounded-full border border-line bg-porcelain px-3 py-1.5 text-sm text-ink/62"
-                        }
-                      >
-                        {plan}
-                      </span>
-                    </li>
-                  );
-                }),
-              )}
-            </ul>
+        <Container className="grid items-center gap-4 py-5 md:grid-cols-2 md:gap-8">
+          <div>
+            <p className="text-sm font-semibold leading-6 text-ink/72">
+              {insuranceAccepted.summary}
+            </p>
+            <Link className="mt-1 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-harbor underline underline-offset-4 focus-visible:rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold" href="/contact#insurance">
+              View accepted insurance <ArrowRight aria-hidden="true" size={16} />
+            </Link>
           </div>
+          <ul aria-label="Accepted insurance" className="flex flex-wrap gap-2">
+            {insuranceAccepted.examples.map((plan) => (
+              <li key={plan} className={insuranceAccepted.featured.includes(plan)
+                ? "rounded-full border border-cyan/30 bg-mist px-3 py-1.5 text-sm font-semibold text-harbor"
+                : "rounded-full border border-line bg-porcelain px-3 py-1.5 text-sm text-ink/75"}>
+                {plan}
+              </li>
+            ))}
+          </ul>
         </Container>
       </div>
     </>

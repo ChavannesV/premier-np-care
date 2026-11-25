@@ -3,7 +3,7 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { MobileBookBar } from "@/components/mobile-book-bar";
 import { StructuredData } from "@/components/structured-data";
-import { bookingUrl } from "@/lib/config";
+import { bookingUrl, whatsappHref } from "@/lib/config";
 import { practiceSettings, providerDetails } from "@/lib/content";
 import { siteUrl } from "@/lib/site";
 
@@ -48,8 +48,8 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
       <main id="main-content" className="flex-1">{children}</main>
       <Footer />
       <StructuredData />
-      <div aria-hidden="true" className="h-[76px] md:hidden" />
-      <MobileBookBar bookingUrl={bookingUrl} />
+      <div aria-hidden="true" className="h-[calc(76px+env(safe-area-inset-bottom))] lg:hidden" />
+      <MobileBookBar bookingUrl={bookingUrl} whatsappHref={whatsappHref} />
     </>
   );
 }
