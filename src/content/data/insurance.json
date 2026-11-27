@@ -15,11 +15,43 @@
       "featured": false
     },
     {
-      "name": "Aetna",
+      "name": "WellPoint ",
       "featured": false
     },
     {
-      "name": "AmeriHealth",
+      "name": "Medicaid",
+      "featured": false
+    },
+    {
+      "name": "Medicare ",
+      "featured": false
+    },
+    {
+      "name": "Aetna Better Health",
+      "featured": false
+    },
+    {
+      "name": "MultiPlan/PHCS",
+      "featured": false
+    },
+    {
+      "name": "Horizon NJ",
+      "featured": false
+    },
+    {
+      "name": "Medicare Group",
+      "featured": false
+    },
+    {
+      "name": "Medicaid Group",
+      "featured": false
+    },
+    {
+      "name": "Horizon BCBS Management Care",
+      "featured": false
+    },
+    {
+      "name": "Horizon BCBS PPO",
       "featured": false
     },
     {
